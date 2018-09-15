@@ -1,4 +1,4 @@
-package segalerva.andrea.populartvshows.data.network.model.response
+package segalerva.andrea.populartvshows.data.model.entity
 
 import com.google.gson.annotations.SerializedName
 
@@ -13,7 +13,7 @@ data class TvShow(
         val airDate: String,
         val overview: String,
         @SerializedName("vote_average")
-        val voteAverage: Int,
+        val voteAverage: Double,
         @SerializedName("original_language")
         val originalLanguage:String,
         @SerializedName("backdrop_path")
