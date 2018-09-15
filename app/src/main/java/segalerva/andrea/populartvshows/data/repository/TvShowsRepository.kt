@@ -1,6 +1,6 @@
 package segalerva.andrea.populartvshows.data.repository
 
-import retrofit2.Call
+import io.reactivex.Observable
 import segalerva.andrea.populartvshows.data.model.response.PopularTvShowsResponse
 
 /**
@@ -8,5 +8,5 @@ import segalerva.andrea.populartvshows.data.model.response.PopularTvShowsRespons
  */
 interface TvShowsRepository {
 
-    fun getPopularTVShows(page:Int):Call<PopularTvShowsResponse>
+    fun getPopularTVShows(page:Int):Observable<PopularTvShowsResponse>
 }

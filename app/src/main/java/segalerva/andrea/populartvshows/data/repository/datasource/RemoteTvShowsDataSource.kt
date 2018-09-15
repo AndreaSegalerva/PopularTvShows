@@ -1,7 +1,7 @@
 package segalerva.andrea.populartvshows.data.repository.datasource
 
 
-import retrofit2.Call
+import io.reactivex.Observable
 import segalerva.andrea.populartvshows.data.network.RestClient
 import segalerva.andrea.populartvshows.data.model.response.PopularTvShowsResponse
 
@@ -10,7 +10,7 @@ import segalerva.andrea.populartvshows.data.model.response.PopularTvShowsRespons
  */
 class RemoteTvShowsDataSource(private val restClient: RestClient) : TvShowsDataSource {
 
-    override fun getPopularTvShows(page: Int): Call<PopularTvShowsResponse> {
+    override fun getPopularTvShows(page: Int): Observable<PopularTvShowsResponse> {
 
         return restClient.apiService!!.getPopularTvShows(page)
     }
