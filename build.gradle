@@ -25,3 +25,19 @@ allprojects {
 task clean(type: Delete) {
     delete rootProject.buildDir
 }
+
+ext {
+
+    //SDK versions
+    compileSdkVersion = 27
+    minSdkVersion = 21
+    targetSdkVersion = 27
+    applicationId = 'segalerva.andrea.populartvshows'
+    versionCode = 1
+    versionName = '1.0'
+
+    //Common dependencies versions
+    JUnitVersion = '4.12'
+    testRunnerVersion = '1.0.2'
+    espressoVersion='3.0.2'
+}
