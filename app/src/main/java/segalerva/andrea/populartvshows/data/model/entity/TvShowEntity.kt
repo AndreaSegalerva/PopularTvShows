@@ -5,7 +5,7 @@ import com.google.gson.annotations.SerializedName
 /**
  * Created by andrea on 15/9/18.
  */
-data class TvShow(
+data class TvShowEntity(
         val id: String,
         @SerializedName("original_name")
         val originalName: String,
