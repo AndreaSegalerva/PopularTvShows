@@ -1,0 +1,45 @@
+.gradle
+.DS_Store
+/build
+
+#General files
+/bin
+/gen
+/out
+
+#Gradle files
+.gradle
+build/
+
+#Local configuration files
+local.properties
+
+#Build application files
+*.ap_
+
+#Java class files
+*.class
+
+#Log files
+*.log
+
+#IntelliJ
+*.iml
+.idea/workspace.xml
+.idea/tasks.xml
+.idea/gradle.xml
+.idea/assetWizardSettings.xml
+.idea/dictionaries
+.idea/libraries
+.idea/caches
+
+.DS_Store
+
+#Android studio capture folders
+/captures
+
+#Android Studio navigation temp files
+.navigation/
+
+#External native folder generated since Android Studio 2.2
+.externalNativeBuild
