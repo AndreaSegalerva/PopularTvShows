@@ -1,0 +1,13 @@
+package segalerva.andrea.populartvshows.domain.model
+
+/**
+ * Created by andrea on 15/9/18.
+ */
+data class TvShow(val id: String,
+                  val originalName: String,
+                  val airDate: String,
+                  val overview: String,
+                  val voteAverage: Double,
+                  val originalLanguage: String,
+                  val backdropPath: String,
+                  val posterPath: String)
