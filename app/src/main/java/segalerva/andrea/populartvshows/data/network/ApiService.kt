@@ -1,6 +1,6 @@
 package segalerva.andrea.populartvshows.data.network
 
-import retrofit2.Call
+import io.reactivex.Observable
 import retrofit2.http.GET
 import retrofit2.http.Query
 import segalerva.andrea.populartvshows.data.model.response.PopularTvShowsResponse
@@ -11,5 +11,5 @@ import segalerva.andrea.populartvshows.data.model.response.PopularTvShowsRespons
 interface ApiService {
 
     @GET("tv/popular?api_key=5496223e71ac936eda331298ec9bc5aa")
-    fun getPopularTvShows(@Query("page") page: Int): Call<PopularTvShowsResponse>
+    fun getPopularTvShows(@Query("page") page: Int): Observable<PopularTvShowsResponse>
 }
