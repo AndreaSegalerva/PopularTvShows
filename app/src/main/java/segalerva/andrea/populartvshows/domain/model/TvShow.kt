@@ -9,5 +9,5 @@ data class TvShow(val id: String,
                   val overview: String,
                   val voteAverage: Double,
                   val originalLanguage: String,
-                  val backdropPath: String,
-                  val posterPath: String)
+                  val backdropPath: String?,
+                  val posterPath: String?)

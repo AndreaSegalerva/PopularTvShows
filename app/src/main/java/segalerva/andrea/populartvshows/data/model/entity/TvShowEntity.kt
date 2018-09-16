@@ -17,6 +17,6 @@ data class TvShowEntity(
         @SerializedName("original_language")
         val originalLanguage:String,
         @SerializedName("backdrop_path")
-        val backdropPath: String,
+        val backdropPath: String?,
         @SerializedName("poster_path")
-        val posterPath: String)
+        val posterPath: String?)
