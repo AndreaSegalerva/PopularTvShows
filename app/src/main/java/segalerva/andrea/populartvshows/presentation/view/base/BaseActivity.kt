@@ -18,6 +18,10 @@ abstract class BaseActivity : AppCompatActivity() {
      */
     protected abstract fun getInitialFragment(): BaseFragment?
 
+    // ------------------------------------------------------------------------------------
+    // Activity lifecycle default overrides
+    // ------------------------------------------------------------------------------------
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
