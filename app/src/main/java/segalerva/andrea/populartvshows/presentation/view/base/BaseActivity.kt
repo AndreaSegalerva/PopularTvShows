@@ -37,15 +37,16 @@ abstract class BaseActivity : AppCompatActivity() {
 
         val fragment = getInitialFragment()
 
-        fragment?.let {
+        if (fragment != null) {
 
             val extras = intent.extras
 
             extras?.let {
 
                 fragment.arguments = extras
-                replaceFragment(R.id.fm_container, fragment, fragment.getFragmentTag(), false)
             }
+
+            replaceFragment(R.id.fm_container, fragment, fragment.getFragmentTag(), false)
         }
 
     }
