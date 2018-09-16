@@ -7,6 +7,7 @@ import segalerva.andrea.populartvshows.extensions.hide
 import segalerva.andrea.populartvshows.extensions.show
 import segalerva.andrea.populartvshows.presentation.model.TvShowView
 import segalerva.andrea.populartvshows.presentation.view.base.BaseFragment
+import segalerva.andrea.populartvshows.presentation.view.presenter.injector.PresenterDependencyInjector
 import segalerva.andrea.populartvshows.presentation.view.presenter.PopularTvShowsListPresenter
 
 /**
@@ -15,10 +16,15 @@ import segalerva.andrea.populartvshows.presentation.view.presenter.PopularTvShow
 class PopularTvShowsListFragment : BaseFragment(), PopularTvShowsListView {
 
     private lateinit var adapter: PopularTvShowsListAdapter
-    private var presenter: PopularTvShowsListPresenter = PopularTvShowsListPresenter(this)
+    private var presenter: PopularTvShowsListPresenter
+    private var presenterDependencyInjector: PresenterDependencyInjector = PresenterDependencyInjector()
 
     companion object {
         fun newInstance() = PopularTvShowsListFragment()
+    }
+
+    init {
+        presenter = PopularTvShowsListPresenter(this, presenterDependencyInjector)
     }
 
     // ------------------------------------------------------------------------------------

@@ -1,30 +1,26 @@
 package segalerva.andrea.populartvshows.presentation.view.presenter
 
 import io.reactivex.observers.DisposableObserver
-import segalerva.andrea.populartvshows.domain.interactor.usecases.GetPopularTvShows
 import segalerva.andrea.populartvshows.domain.model.TvShow
-import segalerva.andrea.populartvshows.presentation.mapper.TvShowMapper
 import segalerva.andrea.populartvshows.presentation.view.base.BaseView
 import segalerva.andrea.populartvshows.presentation.view.features.populartvshows.PopularTvShowsListView
+import segalerva.andrea.populartvshows.presentation.view.presenter.injector.PresenterDependencyInjector
 
 /**
  * Created by andrea on 16/9/18.
  */
-class PopularTvShowsListPresenter(private val view: PopularTvShowsListView) : BasePresenter {
+class PopularTvShowsListPresenter(private val view: PopularTvShowsListView, private val presenterDependencyInjector: PresenterDependencyInjector) : BasePresenter {
 
     override fun getView(): BaseView = view
-
-    private val getPopularTvShows = GetPopularTvShows()
-    private val tvShowsMapper = TvShowMapper()
 
     fun initializeData() {
 
         view.showLoading()
 
-        getPopularTvShows.execute(object : DisposableObserver<List<TvShow>>() {
+        presenterDependencyInjector.getPopularTvShows().execute(object : DisposableObserver<List<TvShow>>() {
 
             override fun onComplete() {
-                //Do nothing
+                //Do nothing for the moment
             }
 
             override fun onError(e: Throwable) {
@@ -39,9 +35,8 @@ class PopularTvShowsListPresenter(private val view: PopularTvShowsListView) : Ba
 
                 if (isSafeManipulateView()) {
                     view.hideLoading()
-                    view.populateTvShows(tvShowsMapper.mapList(t))
+                    view.populateTvShows(presenterDependencyInjector.getTvShowMapper().mapList(t))
                 }
-
             }
         }, 1)
 
