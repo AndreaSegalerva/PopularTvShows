@@ -12,11 +12,11 @@
     </style>
 
     <style name="Text.LightGrey.Small">
-        <item name="android:textSize">14sp</item>
+        <item name="android:textSize">12sp</item>
     </style>
 
     <style name="Text.LightGrey.Medium">
-        <item name="android:textSize">18sp</item>
+        <item name="android:textSize">16sp</item>
     </style>
 
     <style name="Text.LightGrey.Big">
@@ -24,11 +24,11 @@
     </style>
 
     <style name="Text.DarkGrey.Small">
-        <item name="android:textSize">14sp</item>
+        <item name="android:textSize">12sp</item>
     </style>
 
     <style name="Text.DarkGrey.Medium">
-        <item name="android:textSize">18sp</item>
+        <item name="android:textSize">16sp</item>
     </style>
 
     <style name="Text.DarkGrey.Big">

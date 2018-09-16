@@ -14,7 +14,7 @@ class TvShowEntityMapper {
         return TvShow(tvShowEntity.id,
                 tvShowEntity.originalName,
                 tvShowEntity.airDate,
-                tvShowEntity.overview,
+                tvShowEntity.voteCount,
                 tvShowEntity.voteAverage,
                 tvShowEntity.originalLanguage,
                 tvShowEntity.backdropPath,

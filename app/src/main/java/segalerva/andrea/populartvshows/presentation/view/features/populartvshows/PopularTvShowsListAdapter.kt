@@ -59,6 +59,7 @@ class PopularTvShowsListAdapter(private val context: Context) : RecyclerView.Ada
         fun bindTvShow(tvShowView: TvShowView) {
 
             view.tv_show_name.text = tvShowView.name
+            view.tv_votes_count_value.text = tvShowView.voteCount.toString()
             view.tv_vote_average.text = tvShowView.voteAverage.toString()
             view.iv_show_poster.loadImage(tvShowView.posterPath)
         }

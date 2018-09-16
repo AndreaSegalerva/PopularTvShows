@@ -14,6 +14,8 @@ data class TvShowEntity(
         val overview: String,
         @SerializedName("vote_average")
         val voteAverage: Double,
+        @SerializedName("vote_count")
+        val voteCount:Int,
         @SerializedName("original_language")
         val originalLanguage:String,
         @SerializedName("backdrop_path")

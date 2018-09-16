@@ -5,5 +5,6 @@ package segalerva.andrea.populartvshows.presentation.model
  */
 data class TvShowView(val name: String,
                       val posterPath: String?,
+                      val voteCount:Int,
                       val voteAverage: Double,
                       val originalLanguage: String)
