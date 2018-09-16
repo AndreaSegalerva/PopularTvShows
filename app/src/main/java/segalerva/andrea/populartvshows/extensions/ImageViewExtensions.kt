@@ -6,11 +6,15 @@ import segalerva.andrea.populartvshows.R
 
 /**
  * Created by andrea on 16/9/18.
+ * ImageView common extensions
  */
 
-fun ImageView.loadImage(url: String) {
+/**
+ * Load image using Picasso library
+ */
+fun ImageView.loadImage(path: String?) {
 
-    Picasso.get().load(url).
+    Picasso.get().load("http://image.tmdb.org/t/p/w342/" + path).
             error(R.drawable.ic_poster_placeholder).
             placeholder(R.drawable.ic_poster_placeholder).
             into(this)

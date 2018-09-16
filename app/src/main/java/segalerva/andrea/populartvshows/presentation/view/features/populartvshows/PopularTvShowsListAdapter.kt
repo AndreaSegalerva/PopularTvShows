@@ -12,10 +12,11 @@ import segalerva.andrea.populartvshows.presentation.model.TvShowView
 
 /**
  * Created by andrea on 16/9/18.
+ * Adapter for TVShows Recycler View
  */
 class PopularTvShowsListAdapter(private val context: Context) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
-    private var tvShows: List<TvShowView> = ArrayList()
+    private var tvShows: ArrayList<TvShowView> = ArrayList()
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
 
@@ -41,18 +42,25 @@ class PopularTvShowsListAdapter(private val context: Context) : RecyclerView.Ada
         return tvShows[position]
     }
 
+    fun addTvShows(tvSHowViewList: List<TvShowView>) {
+
+        tvShows.addAll(tvSHowViewList)
+        this.notifyDataSetChanged()
+    }
+
+    // ------------------------------------------------------------------------------------
+    // TvShow View Holder class
+    // ------------------------------------------------------------------------------------
+
     class TvShowViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
 
         private var view: View = itemView
-
 
         fun bindTvShow(tvShowView: TvShowView) {
 
             view.tv_show_name.text = tvShowView.name
             view.tv_vote_average.text = tvShowView.voteAverage.toString()
-            tvShowView.posterPath?.let {
-                view.iv_show_poster.loadImage(tvShowView.posterPath)
-            }
+            view.iv_show_poster.loadImage(tvShowView.posterPath)
         }
     }
 }

@@ -23,7 +23,7 @@ abstract class BaseFragment : Fragment(), BaseView {
     abstract fun getFragmentLayout(): Int
 
     /**
-     * Method called when the view is created and it's components ready to use.
+     * Method called when the fragment view is created and it's components ready to use.
      */
     abstract fun prepareView()
 
