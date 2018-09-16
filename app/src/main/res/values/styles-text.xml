@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <style name="Text"></style>
+
+    <style name="Text.LightGrey">
+        <item name="android:textColor">@color/lightGrey</item>
+    </style>
+
+    <style name="Text.DarkGrey">
+        <item name="android:textColor">@color/darkGrey</item>
+    </style>
+
+    <style name="Text.LightGrey.Small">
+        <item name="android:textSize">14sp</item>
+    </style>
+
+    <style name="Text.LightGrey.Medium">
+        <item name="android:textSize">18sp</item>
+    </style>
+
+    <style name="Text.LightGrey.Big">
+        <item name="android:textSize">22sp</item>
+    </style>
+
+    <style name="Text.DarkGrey.Small">
+        <item name="android:textSize">14sp</item>
+    </style>
+
+    <style name="Text.DarkGrey.Medium">
+        <item name="android:textSize">18sp</item>
+    </style>
+
+    <style name="Text.DarkGrey.Big">
+        <item name="android:textSize">22sp</item>
+    </style>
+
+</resources>
