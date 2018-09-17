@@ -1,6 +1,7 @@
 package segalerva.andrea.populartvshows.presentation.view.presenter
 
 import io.reactivex.observers.DisposableObserver
+import segalerva.andrea.populartvshows.R
 import segalerva.andrea.populartvshows.domain.model.PopularTvShows
 import segalerva.andrea.populartvshows.presentation.view.base.BaseView
 import segalerva.andrea.populartvshows.presentation.view.features.populartvshows.PopularTvShowsListView
@@ -20,31 +21,45 @@ class PopularTvShowsListPresenter(private val view: PopularTvShowsListView, priv
 
     fun initializeData() {
 
-        view.showLoading()
+        if (isConnectedToInternet()) {
 
-        presentationDependencyInjector.getPopularTvShows().execute(object : DisposableObserver<PopularTvShows>() {
+            view.hideErrorMessage()
+            view.showLoading()
 
-            override fun onComplete() {
-                //Do nothing for the moment
-            }
+            presentationDependencyInjector.getPopularTvShows().execute(object : DisposableObserver<PopularTvShows>() {
 
-            override fun onError(e: Throwable) {
-
-                if (isSafeManipulateView()) {
-
-                    view.hideLoading()
+                override fun onComplete() {
+                    //Do nothing for the moment
                 }
-            }
 
-            override fun onNext(populatTvShows: PopularTvShows) {
+                override fun onError(e: Throwable) {
 
-                if (isSafeManipulateView()) {
-                    view.hideLoading()
-                    totalPages = populatTvShows.totalPages
-                    view.populateTvShows(presentationDependencyInjector.getTvShowMapper().mapList(populatTvShows.shows))
+                    if (isSafeManipulateView()) {
+
+                        view.hideLoading()
+                        view.showErrorMessage(R.string.something_went_wrong)
+                    }
                 }
-            }
-        }, 1)
 
+                override fun onNext(populatTvShows: PopularTvShows) {
+
+                    if (isSafeManipulateView()) {
+                        view.hideLoading()
+                        totalPages = populatTvShows.totalPages
+                        view.populateTvShows(presentationDependencyInjector.getTvShowMapper().mapList(populatTvShows.shows))
+                    }
+                }
+            }, 1)
+
+        } else {
+
+            view.showConnectionDialog()
+            view.showErrorMessage(R.string.no_connection_try_again)
+        }
+    }
+
+    fun onTryAgainClicked() {
+
+        initializeData()
     }
 }

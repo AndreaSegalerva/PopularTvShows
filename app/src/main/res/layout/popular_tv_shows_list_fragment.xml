@@ -4,6 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
+    <!-- Recycler View for the tv show list -->
     <android.support.v7.widget.RecyclerView
         android:id="@+id/rv_popular_tv_shows"
         android:layout_width="match_parent"
@@ -13,12 +14,26 @@
 
     </android.support.v7.widget.RecyclerView>
 
+    <!-- Error message -->
+    <include
+        android:id="@+id/incl_error_message"
+        layout="@layout/error_message_layout"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+    </include>
+
+    <!-- Loader -->
     <ProgressBar
         android:id="@+id/pb_loader"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:indeterminate="true"
-        android:visibility="visible"
+        android:visibility="gone"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"

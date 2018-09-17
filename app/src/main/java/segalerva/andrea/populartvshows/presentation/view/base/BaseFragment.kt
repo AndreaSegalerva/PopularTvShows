@@ -1,6 +1,8 @@
 package segalerva.andrea.populartvshows.presentation.view.base
 
 import android.content.Context
+import android.net.ConnectivityManager
+import android.os.Build
 import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.util.Log
@@ -44,11 +46,45 @@ abstract class BaseFragment : Fragment(), BaseView {
     }
 
     /**
+     * Method to know if the device is connected to internet {WIFI or Mobile data}
+     */
+    override fun showConnectionDialog() {
+
+        Log.d(getFragmentTag(), " Show connection dialog")
+    }
+
+    /**
      * Method to know if the view is prepared to be manipulated when asynchronous are executed
      */
     override fun isSafeManipulateView(): Boolean {
 
         return isAdded && getBaseActivity() != null && !getBaseActivity()!!.isFinishing
+    }
+
+    override fun isConnectedToInternet(): Boolean {
+
+        val connectivityManager = context()!!.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
+
+        val activeNetwork = connectivityManager.activeNetworkInfo
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+
+            return activeNetwork != null && activeNetwork.isConnectedOrConnecting
+
+        } else {
+
+            return when (activeNetwork.type) {
+                ConnectivityManager.TYPE_WIFI -> {
+                    true
+                }
+                ConnectivityManager.TYPE_MOBILE -> {
+                    true
+                }
+                else -> {
+                    false
+                }
+            }
+        }
     }
 
     // ------------------------------------------------------------------------------------

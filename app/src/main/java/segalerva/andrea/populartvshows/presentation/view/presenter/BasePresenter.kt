@@ -12,4 +12,8 @@ interface BasePresenter {
 
         return getView() != null && getView()?.isSafeManipulateView()!!
     }
+
+    fun isConnectedToInternet(): Boolean {
+        return getView() != null && getView()!!.isConnectedToInternet()
+    }
 }
