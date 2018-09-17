@@ -10,13 +10,14 @@ import segalerva.andrea.populartvshows.presentation.mapper.TvShowMapper
  */
 class PresenterDependencyInjector {
 
-    fun getPopularTvShows(): GetPopularTvShows {
+    /**
+     * Returns an instance of tbe use case GetPopularTvShows
+     */
+    fun getPopularTvShows(): GetPopularTvShows = GetPopularTvShows()
 
-        return GetPopularTvShows()
-    }
+    /**
+     * Returns an instance of TvShowMapper
+     */
+    fun getTvShowMapper(): TvShowMapper = TvShowMapper()
 
-    fun getTvShowMapper(): TvShowMapper {
-
-        return TvShowMapper()
-    }
 }
