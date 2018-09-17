@@ -5,7 +5,8 @@ import segalerva.andrea.populartvshows.domain.model.PopularTvShows
 
 /**
  * Created by andrea on 17/9/18.
- *  * Mapper to convert PopularTvShowsResponse to PopularTvShows model used in the domain layer
+ *  Mapper to convert [PopularTvShowsResponse] to [PopularTvShows] model used in the domain layer
+ *  @param tvShowEntityMapper
  */
 class PopularTvShowsMapper(private val tvShowEntityMapper: TvShowEntityMapper) {
 

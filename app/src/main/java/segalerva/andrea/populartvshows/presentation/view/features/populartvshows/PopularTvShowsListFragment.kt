@@ -3,11 +3,12 @@ package segalerva.andrea.populartvshows.presentation.view.features.populartvshow
 import android.support.v7.widget.LinearLayoutManager
 import kotlinx.android.synthetic.main.popular_tv_shows_list_fragment.*
 import segalerva.andrea.populartvshows.R
+import segalerva.andrea.populartvshows.data.injector.DataDependencyInjector
 import segalerva.andrea.populartvshows.extensions.hide
 import segalerva.andrea.populartvshows.extensions.show
 import segalerva.andrea.populartvshows.presentation.model.TvShowView
 import segalerva.andrea.populartvshows.presentation.view.base.BaseFragment
-import segalerva.andrea.populartvshows.presentation.view.presenter.injector.PresenterDependencyInjector
+import segalerva.andrea.populartvshows.presentation.injector.PresentationDependencyInjector
 import segalerva.andrea.populartvshows.presentation.view.presenter.PopularTvShowsListPresenter
 
 /**
@@ -17,14 +18,15 @@ class PopularTvShowsListFragment : BaseFragment(), PopularTvShowsListView {
 
     private lateinit var adapter: PopularTvShowsListAdapter
     private var presenter: PopularTvShowsListPresenter
-    private var presenterDependencyInjector: PresenterDependencyInjector = PresenterDependencyInjector()
+    private var dataDependencyInjector = DataDependencyInjector()
+    private var presentationDependencyInjector: PresentationDependencyInjector = PresentationDependencyInjector(dataDependencyInjector)
 
     companion object {
         fun newInstance() = PopularTvShowsListFragment()
     }
 
     init {
-        presenter = PopularTvShowsListPresenter(this, presenterDependencyInjector)
+        presenter = PopularTvShowsListPresenter(this, presentationDependencyInjector)
     }
 
     // ------------------------------------------------------------------------------------

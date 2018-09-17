@@ -5,7 +5,7 @@ import segalerva.andrea.populartvshows.domain.model.TvShow
 
 /**
  * Created by andrea on 16/9/18.
- * Mapper to convert TvShowEntity to TvShow model used in the domain layer
+ * Mapper to convert [TvShowEntity] to [TvShow] model used in the domain layer
  */
 class TvShowEntityMapper {
 
