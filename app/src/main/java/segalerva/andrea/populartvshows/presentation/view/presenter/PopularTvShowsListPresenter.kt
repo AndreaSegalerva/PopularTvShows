@@ -18,38 +18,13 @@ class PopularTvShowsListPresenter(private val view: PopularTvShowsListView, priv
 
     override fun getView(): BaseView = view
     private var totalPages = 0
+    private var currentPage = 0
 
     fun initializeData() {
 
         if (isConnectedToInternet()) {
-
-            view.hideErrorMessage()
             view.showLoading()
-
-            presentationDependencyInjector.getPopularTvShows().execute(object : DisposableObserver<PopularTvShows>() {
-
-                override fun onComplete() {
-                    //Do nothing for the moment
-                }
-
-                override fun onError(e: Throwable) {
-
-                    if (isSafeManipulateView()) {
-
-                        view.hideLoading()
-                        view.showErrorMessage(R.string.something_went_wrong)
-                    }
-                }
-
-                override fun onNext(populatTvShows: PopularTvShows) {
-
-                    if (isSafeManipulateView()) {
-                        view.hideLoading()
-                        totalPages = populatTvShows.totalPages
-                        view.populateTvShows(presentationDependencyInjector.getTvShowMapper().mapList(populatTvShows.shows))
-                    }
-                }
-            }, 1)
+            getPopularTvShows(currentPage)
 
         } else {
 
@@ -60,6 +35,56 @@ class PopularTvShowsListPresenter(private val view: PopularTvShowsListView, priv
 
     fun onTryAgainClicked() {
 
+        view.showLoading()
         initializeData()
+    }
+
+    // ------------------------------------------------------------------------------------
+    // Private methods
+    // ------------------------------------------------------------------------------------
+
+    private fun getPopularTvShows(page: Int) {
+
+        currentPage = page + 1
+        presentationDependencyInjector.getPopularTvShows().execute(object : DisposableObserver<PopularTvShows>() {
+
+            override fun onComplete() {
+                //Do nothing for the moment
+            }
+
+            override fun onError(e: Throwable) {
+
+                if (isSafeManipulateView()) {
+
+                    view.hideLoading()
+                    view.showErrorMessage(R.string.something_went_wrong)
+                }
+            }
+
+            override fun onNext(popularTvShows: PopularTvShows) {
+
+                if (isSafeManipulateView()) {
+                    view.hideLoading()
+                    view.hideErrorMessage()
+                    totalPages = popularTvShows.totalPages
+                    view.populateTvShows(presentationDependencyInjector.getTvShowMapper().mapList(popularTvShows.shows))
+                }
+            }
+        }, currentPage)
+    }
+
+    /**
+     * When scrolled and need to paginate
+     * Load more tv shows until all the pages are loaded
+     */
+    fun onLoadMore() {
+
+        if (currentPage < totalPages) {
+
+            getPopularTvShows(currentPage)
+        } else {
+
+            view.disableLoadMore()
+        }
     }
 }

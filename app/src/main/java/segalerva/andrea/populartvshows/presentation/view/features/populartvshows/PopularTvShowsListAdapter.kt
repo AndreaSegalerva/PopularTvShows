@@ -5,9 +5,12 @@ import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import kotlinx.android.synthetic.main.cell_load_more.view.*
 import kotlinx.android.synthetic.main.cell_tv_show.view.*
 import segalerva.andrea.populartvshows.R
+import segalerva.andrea.populartvshows.extensions.hide
 import segalerva.andrea.populartvshows.extensions.loadImage
+import segalerva.andrea.populartvshows.extensions.show
 import segalerva.andrea.populartvshows.presentation.model.TvShowView
 
 /**
@@ -16,42 +19,101 @@ import segalerva.andrea.populartvshows.presentation.model.TvShowView
  */
 class PopularTvShowsListAdapter(private val context: Context) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
+    private val typeTvShow = 0
+    private val typeLoadMore = 1
     private var tvShows: ArrayList<TvShowView> = ArrayList()
+    private var loadMoreenabled = true
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
 
         val layoutInflater = context.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
-        val view = layoutInflater.inflate(R.layout.cell_tv_show, parent, false)
-        return TvShowViewHolder(view)
+        val tvShowCell = layoutInflater.inflate(R.layout.cell_tv_show, parent, false)
+        val loadMoreCell = layoutInflater.inflate(R.layout.cell_load_more, parent, false)
+
+        return when (viewType) {
+            typeTvShow -> TvShowViewHolder(tvShowCell)
+            typeLoadMore -> LoadMoreViewHolder(loadMoreCell)
+            else -> {
+                throw IllegalArgumentException("The view type $viewType is a invalid argument invalid")
+            }
+        }
     }
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
 
-        val tvShowView = getItem(position)
+        when (getItemViewType(position)) {
 
-        (holder as TvShowViewHolder).bindTvShow(tvShowView)
+            typeTvShow -> {
+
+                val tvShowView = getItem(position)
+
+                if (tvShowView != null) {
+                    (holder as TvShowViewHolder).bindTvShow(tvShowView)
+                    //TODO set on click listener
+                }
+            }
+
+            typeLoadMore -> {
+
+                if (loadMoreenabled) {
+                    (holder as LoadMoreViewHolder).showLoadMore()
+                } else {
+                    (holder as LoadMoreViewHolder).hideLoadMore()
+                }
+            }
+        }
     }
 
     override fun getItemCount(): Int {
 
-        return tvShows.count()
+        return tvShows.size + 1 // +1 because of the load more cell item
     }
 
-    fun getItem(position: Int): TvShowView {
+    override fun getItemViewType(position: Int): Int {
 
-        return tvShows[position]
+        return if (position != 0 && position == itemCount - 1) {
+            typeLoadMore
+        } else {
+            typeTvShow
+        }
     }
 
-    fun addTvShows(tvSHowViewList: List<TvShowView>) {
+// ------------------------------------------------------------------------------------
+// Public methods
+// ------------------------------------------------------------------------------------
 
-        tvShows.addAll(tvSHowViewList)
+    fun addTvShows(tvShowViewList: List<TvShowView>) {
+
+        tvShows.addAll(tvShowViewList)
         this.notifyDataSetChanged()
     }
 
-    // ------------------------------------------------------------------------------------
-    // TvShow View Holder class
-    // ------------------------------------------------------------------------------------
+    fun setLoadMoreEnabled(enable: Boolean) {
 
+        loadMoreenabled = enable
+    }
+
+// ------------------------------------------------------------------------------------
+// Private methods
+// ------------------------------------------------------------------------------------
+
+    private fun getItem(position: Int): TvShowView? {
+
+        return if (tvShows.size > position) {
+            tvShows[position]
+        } else {
+            null
+        }
+    }
+
+// ------------------------------------------------------------------------------------
+// TvShow View Holder class
+// ------------------------------------------------------------------------------------
+
+    /**
+     * View Holder of tv show cell view
+     * @param itemView
+     */
     class TvShowViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
 
         private var view: View = itemView
@@ -62,6 +124,23 @@ class PopularTvShowsListAdapter(private val context: Context) : RecyclerView.Ada
             view.tv_votes_count_value.text = tvShowView.voteCount.toString()
             view.tv_vote_average.text = tvShowView.voteAverage.toString()
             view.iv_show_poster.loadImage(tvShowView.posterPath)
+        }
+    }
+
+    /**
+     * View Holder of tv load more cell view
+     * @param itemView
+     */
+    class LoadMoreViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+
+        private var view: View = itemView
+
+        fun showLoadMore() {
+            view.pb_bottom_loader.show()
+        }
+
+        fun hideLoadMore() {
+            view.pb_bottom_loader.hide()
         }
     }
 }

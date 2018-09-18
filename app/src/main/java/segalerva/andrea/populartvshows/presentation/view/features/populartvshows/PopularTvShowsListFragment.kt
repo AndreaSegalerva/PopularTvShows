@@ -2,6 +2,7 @@ package segalerva.andrea.populartvshows.presentation.view.features.populartvshow
 
 import android.app.AlertDialog
 import android.support.v7.widget.LinearLayoutManager
+import android.support.v7.widget.RecyclerView
 import android.util.Log
 import kotlinx.android.synthetic.main.error_message_layout.*
 import kotlinx.android.synthetic.main.popular_tv_shows_list_fragment.*
@@ -23,6 +24,9 @@ class PopularTvShowsListFragment : BaseFragment(), PopularTvShowsListView {
     private var presenter: PopularTvShowsListPresenter
     private var dataDependencyInjector = DataDependencyInjector()
     private var presentationDependencyInjector: PresentationDependencyInjector = PresentationDependencyInjector(dataDependencyInjector)
+
+    private var isAlreadyLoading = false
+    private var numberElementsPerPage = 20
 
     companion object {
         fun newInstance() = PopularTvShowsListFragment()
@@ -88,7 +92,14 @@ class PopularTvShowsListFragment : BaseFragment(), PopularTvShowsListView {
 
     override fun populateTvShows(tvShowViews: List<TvShowView>) {
 
+        isAlreadyLoading = false
         this.adapter.addTvShows(tvShowViews)
+    }
+
+    override fun disableLoadMore() {
+
+        adapter.setLoadMoreEnabled(false)
+        adapter.notifyDataSetChanged()
     }
 
 // ------------------------------------------------------------------------------------
@@ -100,6 +111,36 @@ class PopularTvShowsListFragment : BaseFragment(), PopularTvShowsListView {
         adapter = PopularTvShowsListAdapter(context!!)
         rv_popular_tv_shows.layoutManager = LinearLayoutManager(context())
         rv_popular_tv_shows.adapter = adapter
+
+        addOnScrollListener()
+    }
+
+    private fun addOnScrollListener() {
+
+        rv_popular_tv_shows.addOnScrollListener(object : RecyclerView.OnScrollListener() {
+
+            override fun onScrolled(recyclerView: RecyclerView?, dx: Int, dy: Int) {
+
+                if (scrollPositionToLoadMore()) {
+
+                    isAlreadyLoading = true
+                    presenter.onLoadMore()
+                }
+            }
+        })
+    }
+
+    /**
+     * Returns if the scroll position is the one to start the load more pagination
+     */
+    private fun scrollPositionToLoadMore(): Boolean {
+
+        val layoutManager = rv_popular_tv_shows.layoutManager as LinearLayoutManager
+        val visibleItems = layoutManager.childCount
+        val totalItems = layoutManager.itemCount
+        val firstVisibleItemPosition = layoutManager.findFirstVisibleItemPosition()
+
+        return !isAlreadyLoading && (firstVisibleItemPosition + visibleItems) >= totalItems && totalItems >= numberElementsPerPage
     }
 
     private fun setOnClickListeners() {
