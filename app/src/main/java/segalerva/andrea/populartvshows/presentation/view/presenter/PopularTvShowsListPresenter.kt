@@ -1,7 +1,7 @@
 package segalerva.andrea.populartvshows.presentation.view.presenter
 
-import io.reactivex.observers.DisposableObserver
 import segalerva.andrea.populartvshows.R
+import segalerva.andrea.populartvshows.domain.interactor.callback.BaseDisposableObserver
 import segalerva.andrea.populartvshows.domain.model.PopularTvShows
 import segalerva.andrea.populartvshows.presentation.view.base.BaseView
 import segalerva.andrea.populartvshows.presentation.view.features.populartvshows.PopularTvShowsListView
@@ -47,11 +47,7 @@ class PopularTvShowsListPresenter(private val view: PopularTvShowsListView, priv
     private fun executeGetPopularTvShows(page: Int) {
 
         currentPage = page + 1
-        presentationDependencyInjector.getPopularTvShows().execute(object : DisposableObserver<PopularTvShows>() {
-
-            override fun onComplete() {
-                //Do nothing for the moment
-            }
+        presentationDependencyInjector.getPopularTvShows().execute(object : BaseDisposableObserver<PopularTvShows>() {
 
             override fun onError(e: Throwable) {
 
@@ -62,13 +58,13 @@ class PopularTvShowsListPresenter(private val view: PopularTvShowsListView, priv
                 }
             }
 
-            override fun onNext(popularTvShows: PopularTvShows) {
+            override fun onNext(response: PopularTvShows) {
 
                 if (isSafeManipulateView()) {
                     view.hideLoading()
                     view.hideErrorMessage()
-                    totalPages = popularTvShows.totalPages
-                    view.populateTvShows(presentationDependencyInjector.getTvShowMapper().mapList(popularTvShows.shows))
+                    totalPages = response.totalPages
+                    view.populateTvShows(presentationDependencyInjector.getTvShowMapper().mapList(response.shows))
                 }
             }
         }, currentPage)

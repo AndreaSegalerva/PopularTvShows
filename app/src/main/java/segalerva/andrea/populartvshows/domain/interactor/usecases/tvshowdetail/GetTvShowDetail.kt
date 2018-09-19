@@ -1,10 +1,10 @@
 package segalerva.andrea.populartvshows.domain.interactor.usecases.tvshowdetail
 
 import io.reactivex.Observable
-import io.reactivex.observers.DisposableObserver
 import segalerva.andrea.populartvshows.data.injector.DataDependencyInjector
 import segalerva.andrea.populartvshows.domain.injector.DomainDependencyInjector
 import segalerva.andrea.populartvshows.domain.interactor.Interactor
+import segalerva.andrea.populartvshows.domain.interactor.callback.BaseDisposableObserver
 import segalerva.andrea.populartvshows.domain.interactor.usecases.similartvshows.GetSimilarTvShows
 import segalerva.andrea.populartvshows.domain.interactor.usecases.similartvshows.GetSimilarTvShowsParams
 import segalerva.andrea.populartvshows.domain.model.PopularTvShows
@@ -38,12 +38,12 @@ class GetTvShowDetail(private val dataDependencyInjector: DataDependencyInjector
 
             kotlin.run {
 
-                getSimilarTvShows.execute(object : DisposableObserver<PopularTvShows>() {
+                getSimilarTvShows.execute(object : BaseDisposableObserver<PopularTvShows>() {
 
-                    override fun onNext(t: PopularTvShows) {
+                    override fun onNext(response: PopularTvShows) {
 
-                        if (t.shows.isNotEmpty()) {
-                            showDetail.addSimilarShows(t.shows)
+                        if (response.shows.isNotEmpty()) {
+                            showDetail.addSimilarShows(response.shows)
                         }
 
                         subscriber.onNext(showDetail)
@@ -54,10 +54,6 @@ class GetTvShowDetail(private val dataDependencyInjector: DataDependencyInjector
                         subscriber.onNext(showDetail)
                     }
 
-                    override fun onComplete() {
-
-                        //Do nothing for the moment
-                    }
                 }, params)
 
             }

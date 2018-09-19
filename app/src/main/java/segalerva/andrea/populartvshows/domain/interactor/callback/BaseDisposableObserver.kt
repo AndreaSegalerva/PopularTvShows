@@ -19,7 +19,7 @@ open class BaseDisposableObserver<T> : DisposableObserver<T>() {
         Log.d(javaClass.name, "OnError")
     }
 
-    override fun onNext(t: T) {
+    override fun onNext(response: T) {
         Log.d(javaClass.name, "OnNext")
     }
 }
