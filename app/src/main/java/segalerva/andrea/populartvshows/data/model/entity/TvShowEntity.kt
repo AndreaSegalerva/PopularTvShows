@@ -6,7 +6,7 @@ import com.google.gson.annotations.SerializedName
  * Created by andrea on 15/9/18.
  */
 data class TvShowEntity(
-        val id: String,
+        val id: Int,
         @SerializedName("original_name")
         val originalName: String,
         @SerializedName("first_air_date")

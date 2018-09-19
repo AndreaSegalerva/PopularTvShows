@@ -1,7 +1,7 @@
 package segalerva.andrea.populartvshows.presentation.injector
 
 import segalerva.andrea.populartvshows.data.injector.DataDependencyInjector
-import segalerva.andrea.populartvshows.domain.interactor.usecases.GetPopularTvShows
+import segalerva.andrea.populartvshows.domain.interactor.usecases.populartvshows.GetPopularTvShows
 import segalerva.andrea.populartvshows.presentation.mapper.TvShowMapper
 
 /**

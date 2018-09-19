@@ -9,7 +9,7 @@ import segalerva.andrea.populartvshows.domain.model.TvShow
  */
 class TvShowEntityMapper {
 
-    private fun map(tvShowEntity: TvShowEntity): TvShow {
+    fun map(tvShowEntity: TvShowEntity): TvShow {
 
         return TvShow(tvShowEntity.id,
                 tvShowEntity.originalName,

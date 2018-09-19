@@ -3,7 +3,7 @@ package segalerva.andrea.populartvshows.domain.model
 /**
  * Created by andrea on 15/9/18.
  */
-data class TvShow(val id: String,
+data class TvShow(val id: Int,
                   val originalName: String,
                   val airDate: String,
                   val overView:String,

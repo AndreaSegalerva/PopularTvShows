@@ -28,6 +28,14 @@ class DataDependencyInjector {
     }
 
     /**
+     * Returns an instance of TVShowsDataRepository needed in every use case defined in the domain layer
+     */
+    fun getTvShowsDataRepository(): TvShowsDataRepository {
+
+        return TvShowsDataRepository(getRemoteTvShowsDataSource(), getPopularTvShowsMapper(), getTvShowEntityMapper())
+    }
+
+    /**
      * Returns an instance of RestClient used in [RemoteTvShowsDataSource]
      */
     private fun getRestClient(): RestClient {

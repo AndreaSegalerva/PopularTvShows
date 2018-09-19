@@ -11,7 +11,13 @@ class TvShowMapper {
 
     fun map(tvShow: TvShow): TvShowView {
 
-        return TvShowView(tvShow.originalName, tvShow.posterPath, tvShow.overView,tvShow.voteCount, tvShow.voteAverage, tvShow.originalLanguage)
+        return TvShowView(tvShow.id,
+                tvShow.originalName,
+                tvShow.posterPath,
+                tvShow.overView,
+                tvShow.voteCount,
+                tvShow.voteAverage,
+                tvShow.originalLanguage)
     }
 
     fun mapList(tvShows: List<TvShow>): List<TvShowView> {
