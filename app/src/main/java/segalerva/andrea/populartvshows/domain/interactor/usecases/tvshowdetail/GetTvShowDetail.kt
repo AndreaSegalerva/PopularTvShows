@@ -12,7 +12,7 @@ import segalerva.andrea.populartvshows.domain.model.TvShowDetail
 
 /**
  * Created by andrea on 19/9/18.
- * Use case to show all the show information in the detail screen
+ * Use case to show all the tv show information in the detail screen
  */
 class GetTvShowDetail(private val dataDependencyInjector: DataDependencyInjector, private val domainDependencyInjector: DomainDependencyInjector) : Interactor<TvShowDetail, GetSimilarTvShowsParams>() {
 

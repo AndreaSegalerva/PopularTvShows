@@ -5,8 +5,11 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     app:cardBackgroundColor="@color/polar"
+    android:background="?attr/selectableItemBackground"
     app:cardCornerRadius="8dp"
-    app:cardUseCompatPadding="true">
+    android:clickable="true"
+    app:cardUseCompatPadding="true"
+    android:focusable="true">
 
     <android.support.constraint.ConstraintLayout
         android:layout_width="match_parent"
@@ -29,7 +32,7 @@
         <!-- Name-->
         <TextView
             android:id="@+id/tv_show_name"
-            style="@style/Text.DarkGrey.Big"
+            style="@style/Text.Black.Big"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:ellipsize="end"

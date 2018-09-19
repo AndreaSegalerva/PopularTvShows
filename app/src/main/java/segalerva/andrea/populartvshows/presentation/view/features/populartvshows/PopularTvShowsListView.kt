@@ -12,4 +12,5 @@ interface PopularTvShowsListView : BaseView {
     fun disableLoadMore()
     fun hideTvShowsList()
     fun hideMoreLoading()
+    fun navigateToTvShowDetail(tvShowView: TvShowView)
 }

@@ -6,7 +6,7 @@ import android.support.v7.widget.RecyclerView
 import android.util.Log
 import kotlinx.android.synthetic.main.cell_load_more.*
 import kotlinx.android.synthetic.main.error_message_layout.*
-import kotlinx.android.synthetic.main.popular_tv_shows_list_fragment.*
+import kotlinx.android.synthetic.main.fragment_popular_tv_shows_list.*
 import segalerva.andrea.populartvshows.R
 import segalerva.andrea.populartvshows.data.injector.DataDependencyInjector
 import segalerva.andrea.populartvshows.extensions.hide
@@ -14,6 +14,7 @@ import segalerva.andrea.populartvshows.extensions.show
 import segalerva.andrea.populartvshows.presentation.model.TvShowView
 import segalerva.andrea.populartvshows.presentation.view.base.BaseFragment
 import segalerva.andrea.populartvshows.presentation.injector.PresentationDependencyInjector
+import segalerva.andrea.populartvshows.presentation.view.features.tvshowdetail.TvShowDetailActivity
 import segalerva.andrea.populartvshows.presentation.view.presenter.PopularTvShowsListPresenter
 
 /**
@@ -41,7 +42,7 @@ class PopularTvShowsListFragment : BaseFragment(), PopularTvShowsListView {
     // BaseFragment overrides
     // ------------------------------------------------------------------------------------
 
-    override fun getFragmentLayout(): Int = R.layout.popular_tv_shows_list_fragment
+    override fun getFragmentLayout(): Int = R.layout.fragment_popular_tv_shows_list
 
     override fun prepareView() {
 
@@ -86,9 +87,9 @@ class PopularTvShowsListFragment : BaseFragment(), PopularTvShowsListView {
         incl_error_message.hide()
     }
 
-// ------------------------------------------------------------------------------------
-// PopularTvShowsListView overrides
-// ------------------------------------------------------------------------------------
+    // ------------------------------------------------------------------------------------
+    // PopularTvShowsListView overrides
+    // ------------------------------------------------------------------------------------
 
     override fun populateTvShows(tvShowViews: List<TvShowView>) {
 
@@ -112,17 +113,34 @@ class PopularTvShowsListFragment : BaseFragment(), PopularTvShowsListView {
         adapter.notifyDataSetChanged()
     }
 
-// ------------------------------------------------------------------------------------
-// Private methods
-// ------------------------------------------------------------------------------------
+    // ------------------------------------------------------------------------------------
+    // PopularTvShowsListView overrides
+    // ------------------------------------------------------------------------------------
+
+    override fun navigateToTvShowDetail(tvShowView: TvShowView) {
+
+        if (getBaseActivity() != null) {
+            startActivity(TvShowDetailActivity.createIntent(getBaseActivity()!!, tvShowView.name))
+        }
+    }
+
+    // ------------------------------------------------------------------------------------
+    // Private methods
+    // ------------------------------------------------------------------------------------
 
     private fun prepareRecyclerView() {
 
         adapter = PopularTvShowsListAdapter(context!!)
+
         rv_popular_tv_shows.layoutManager = LinearLayoutManager(context())
         rv_popular_tv_shows.adapter = adapter
-
         addOnScrollListener()
+
+        this.adapter.setOnTvShowClickListener(object : TvShowClickListener {
+            override fun onTvShowClicked(tvShowView: TvShowView) {
+                presenter.onTvShowClicked(tvShowView)
+            }
+        })
     }
 
     private fun addOnScrollListener() {

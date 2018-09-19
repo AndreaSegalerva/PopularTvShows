@@ -22,6 +22,14 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
+        <activity
+            android:name=".presentation.view.features.tvshowdetail.TvShowDetailActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.CoordinatorTheme">
+
+        </activity>
+
     </application>
 
 </manifest>

@@ -10,7 +10,7 @@ import segalerva.andrea.populartvshows.domain.model.TvShow
 /**
  * Created by andrea on 15/9/18.
  */
-class TvShowsDataRepository(private val remoteTvShowsDataSource: TvShowsDataSource, private val popularTvShowsMapper: PopularTvShowsMapper, private val tvShowEntityMapper: TvShowEntityMapper) : TvShowsRepository {
+class TvShowsDataRepositoryImpl(private val remoteTvShowsDataSource: TvShowsDataSource, private val popularTvShowsMapper: PopularTvShowsMapper, private val tvShowEntityMapper: TvShowEntityMapper) : TvShowsRepository {
 
     override fun getPopularTVShows(page: Int): Observable<PopularTvShows> {
 

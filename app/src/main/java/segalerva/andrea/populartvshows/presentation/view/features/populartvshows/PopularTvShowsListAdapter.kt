@@ -23,6 +23,7 @@ class PopularTvShowsListAdapter(private val context: Context) : RecyclerView.Ada
     private val typeLoadMore = 1
     private var tvShows: ArrayList<TvShowView> = ArrayList()
     private var loadMoreenabled = true
+    private var tvShowClickListener: TvShowClickListener? = null
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
 
@@ -49,7 +50,10 @@ class PopularTvShowsListAdapter(private val context: Context) : RecyclerView.Ada
 
                 if (tvShowView != null) {
                     (holder as TvShowViewHolder).bindTvShow(tvShowView)
-                    //TODO set on click listener
+
+                    holder.itemView.setOnClickListener {
+                        onItemClickListener(tvShowView)
+                    }
                 }
             }
 
@@ -93,6 +97,11 @@ class PopularTvShowsListAdapter(private val context: Context) : RecyclerView.Ada
         loadMoreenabled = enable
     }
 
+    fun setOnTvShowClickListener(clickListener: TvShowClickListener) {
+
+        this.tvShowClickListener = clickListener
+    }
+
 // ------------------------------------------------------------------------------------
 // Private methods
 // ------------------------------------------------------------------------------------
@@ -104,6 +113,11 @@ class PopularTvShowsListAdapter(private val context: Context) : RecyclerView.Ada
         } else {
             null
         }
+    }
+
+    private fun onItemClickListener(tvShowView: TvShowView) {
+
+        tvShowClickListener?.onTvShowClicked(tvShowView)
     }
 
 // ------------------------------------------------------------------------------------

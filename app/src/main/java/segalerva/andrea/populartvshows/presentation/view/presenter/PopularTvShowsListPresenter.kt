@@ -6,6 +6,7 @@ import segalerva.andrea.populartvshows.domain.model.PopularTvShows
 import segalerva.andrea.populartvshows.presentation.view.base.BaseView
 import segalerva.andrea.populartvshows.presentation.view.features.populartvshows.PopularTvShowsListView
 import segalerva.andrea.populartvshows.presentation.injector.PresentationDependencyInjector
+import segalerva.andrea.populartvshows.presentation.model.TvShowView
 
 /**
  * Created by andrea on 16/9/18.
@@ -19,6 +20,7 @@ class PopularTvShowsListPresenter(private val view: PopularTvShowsListView, priv
     override fun getView(): BaseView = view
     private var totalPages = 0
     private var currentPage = 0
+    private var tvShows = ArrayList<TvShowView>()
 
     fun getPopularTvShowsData(isLoadingMore: Boolean) {
 
@@ -38,6 +40,11 @@ class PopularTvShowsListPresenter(private val view: PopularTvShowsListView, priv
     fun onTryAgainClicked() {
 
         getPopularTvShowsData(false)
+    }
+
+    fun onTvShowClicked(tvShowView: TvShowView) {
+
+        view.navigateToTvShowDetail(tvShowView)
     }
 
     // ------------------------------------------------------------------------------------
