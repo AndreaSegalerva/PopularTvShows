@@ -4,6 +4,7 @@ import android.app.AlertDialog
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
 import android.util.Log
+import kotlinx.android.synthetic.main.cell_load_more.*
 import kotlinx.android.synthetic.main.error_message_layout.*
 import kotlinx.android.synthetic.main.popular_tv_shows_list_fragment.*
 import segalerva.andrea.populartvshows.R
@@ -46,7 +47,7 @@ class PopularTvShowsListFragment : BaseFragment(), PopularTvShowsListView {
 
         prepareRecyclerView()
         setOnClickListeners()
-        presenter.initializeData()
+        presenter.getPopularTvShowsData(false)
     }
 
     override fun showLoading() {
@@ -85,15 +86,24 @@ class PopularTvShowsListFragment : BaseFragment(), PopularTvShowsListView {
         incl_error_message.hide()
     }
 
-
 // ------------------------------------------------------------------------------------
 // PopularTvShowsListView overrides
 // ------------------------------------------------------------------------------------
 
     override fun populateTvShows(tvShowViews: List<TvShowView>) {
 
+        rv_popular_tv_shows.show()
         isAlreadyLoading = false
         this.adapter.addTvShows(tvShowViews)
+    }
+
+    override fun hideTvShowsList() {
+
+        rv_popular_tv_shows.hide()
+    }
+
+    override fun hideMoreLoading() {
+        pb_bottom_loader.hide()
     }
 
     override fun disableLoadMore() {

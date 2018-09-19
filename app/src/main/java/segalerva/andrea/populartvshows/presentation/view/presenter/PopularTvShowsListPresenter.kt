@@ -20,30 +20,31 @@ class PopularTvShowsListPresenter(private val view: PopularTvShowsListView, priv
     private var totalPages = 0
     private var currentPage = 0
 
-    fun initializeData() {
+    fun getPopularTvShowsData(isLoadingMore: Boolean) {
 
         if (isConnectedToInternet()) {
-            view.showLoading()
-            getPopularTvShows(currentPage)
+
+            if (!isLoadingMore) {
+                view.showLoading()
+            }
+            executeGetPopularTvShows(currentPage)
 
         } else {
 
-            view.showConnectionDialog()
-            view.showErrorMessage(R.string.no_connection_try_again)
+            showInternetConnectionMessage()
         }
     }
 
     fun onTryAgainClicked() {
 
-        view.showLoading()
-        initializeData()
+        getPopularTvShowsData(false)
     }
 
     // ------------------------------------------------------------------------------------
     // Private methods
     // ------------------------------------------------------------------------------------
 
-    private fun getPopularTvShows(page: Int) {
+    private fun executeGetPopularTvShows(page: Int) {
 
         currentPage = page + 1
         presentationDependencyInjector.getPopularTvShows().execute(object : DisposableObserver<PopularTvShows>() {
@@ -81,10 +82,18 @@ class PopularTvShowsListPresenter(private val view: PopularTvShowsListView, priv
 
         if (currentPage < totalPages) {
 
-            getPopularTvShows(currentPage)
+            getPopularTvShowsData(true)
+
         } else {
 
             view.disableLoadMore()
         }
+    }
+
+    private fun showInternetConnectionMessage() {
+
+        view.hideTvShowsList()
+        view.showConnectionDialog()
+        view.showErrorMessage(R.string.no_connection_try_again)
     }
 }

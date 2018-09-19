@@ -10,4 +10,6 @@ interface PopularTvShowsListView : BaseView {
 
     fun populateTvShows(tvShowViews: List<TvShowView>)
     fun disableLoadMore()
+    fun hideTvShowsList()
+    fun hideMoreLoading()
 }
