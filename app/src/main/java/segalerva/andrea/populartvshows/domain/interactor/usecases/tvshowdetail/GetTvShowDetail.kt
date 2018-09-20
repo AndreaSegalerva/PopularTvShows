@@ -43,9 +43,9 @@ class GetTvShowDetail(private val dataDependencyInjector: DataDependencyInjector
                     override fun onNext(response: PopularTvShows) {
 
                         if (response.shows.isNotEmpty()) {
-                            showDetail.addSimilarShows(response.shows)
-                        }
 
+                            showDetail.similarTvShows = response
+                        }
                         subscriber.onNext(showDetail)
                     }
 

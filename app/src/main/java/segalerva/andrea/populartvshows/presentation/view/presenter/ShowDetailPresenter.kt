@@ -7,6 +7,7 @@ import segalerva.andrea.populartvshows.domain.model.TvShow
 import segalerva.andrea.populartvshows.domain.model.TvShowDetail
 import segalerva.andrea.populartvshows.presentation.injector.PresentationDependencyInjector
 import segalerva.andrea.populartvshows.presentation.model.TvShowDetailView
+import segalerva.andrea.populartvshows.presentation.model.TvShowView
 import segalerva.andrea.populartvshows.presentation.view.base.BaseView
 import segalerva.andrea.populartvshows.presentation.view.features.tvshowdetail.ShowDetailView
 
@@ -78,12 +79,17 @@ class ShowDetailPresenter(private val view: ShowDetailView, private val presenta
 
     private fun showSimilarTvShows() {
 
-        if (tvShowDetailView.similarShows.isNotEmpty()) {
+        if (tvShowDetailView.similarShows != null) {
+            if (tvShowDetailView.similarShows!!.shows.isNotEmpty()) {
 
-            view.showSimilarTvShows(tvShowDetailView.similarShows)
-        } else {
+                val similarTvShows = tvShowDetailView.similarShows!!.shows
+                val similarTvShowsViews = presentationDependencyInjector.getTvShowMapper().mapList(similarTvShows)
+                view.showSimilarTvShows(similarTvShowsViews)
 
-            //TODO show empty view
+            } else {
+
+                //TODO show empty view
+            }
         }
     }
 }

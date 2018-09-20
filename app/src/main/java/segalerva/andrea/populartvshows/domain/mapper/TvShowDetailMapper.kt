@@ -22,6 +22,6 @@ class TvShowDetailMapper {
                 tvShow.posterPath,
                 tvShow.numberEpisodes,
                 tvShow.numberSeasons,
-                ArrayList())
+                null)
     }
 }

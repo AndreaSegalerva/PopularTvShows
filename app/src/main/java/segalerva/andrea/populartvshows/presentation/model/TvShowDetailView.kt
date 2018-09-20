@@ -1,5 +1,7 @@
 package segalerva.andrea.populartvshows.presentation.model
 
+import segalerva.andrea.populartvshows.domain.model.PopularTvShows
+
 /**
  * Created by andrea on 20/9/18.
  */
@@ -15,4 +17,4 @@ data class TvShowDetailView(
         val posterPath: String?,
         val numberEpisodes: Int?,
         val numberSeasons: Int?,
-        var similarShows: List<TvShowView>)
+        var similarShows: PopularTvShows?)

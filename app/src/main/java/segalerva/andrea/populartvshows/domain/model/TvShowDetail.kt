@@ -15,10 +15,4 @@ class TvShowDetail(val id: Int,
                    val posterPath: String?,
                    val numberEpisodes: Int?,
                    val numberSeasons: Int?,
-                   var similarShows: ArrayList<TvShow>) {
-
-    fun addSimilarShows(shows: List<TvShow>) {
-
-        similarShows.addAll(shows)
-    }
-}
+                   var similarTvShows: PopularTvShows?)

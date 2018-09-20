@@ -24,6 +24,6 @@ class TvShowDetailMapper(private val tvShowMapper: TvShowMapper) {
                 tvShowDetail.posterPath,
                 tvShowDetail.numberEpisodes,
                 tvShowDetail.numberSeasons,
-                tvShowMapper.mapList(tvShowDetail.similarShows))
+                tvShowDetail.similarTvShows)
     }
 }
