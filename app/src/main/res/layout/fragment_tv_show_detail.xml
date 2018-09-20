@@ -48,18 +48,133 @@
         android:layout_height="match_parent"
         app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
+        <!-- TV show detailed information container-->
         <android.support.constraint.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:padding="16dp">
 
-            <!-- TV show detailed information-->
+            <!-- Vote Average-->
+
+            <ImageView
+                android:id="@+id/iv_star"
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:src="@drawable/ic_star"
+                android:tint="@color/yellow"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <!-- Vote average-->
+            <TextView
+                android:id="@+id/tv_vote_average"
+                style="@style/Text.Black.Medium"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="4dp"
+                app:layout_constraintLeft_toRightOf="@+id/iv_star"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:text="8,9" />
+
+            <!-- OverView title-->
+            <TextView
+                android:id="@+id/tv_overview_title"
+                style="@style/Text.DarkGrey.Big"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:text="@string/tv_show_overview"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/tv_vote_average" />
+
+            <!-- OverView description-->
+            <TextView
+                android:id="@+id/tv_overview_description"
+                style="@style/Text.Black.Medium"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/tv_overview_title"
+                tools:text="Iron fist........" />
+
+            <!-- Air date title-->
+            <TextView
+                android:id="@+id/tv_air_date_title"
+                style="@style/Text.DarkGrey.Big"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:text="@string/tv_show_air_date"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/tv_overview_description" />
+
+            <!-- Air date value-->
+            <TextView
+                android:id="@+id/tv_air_date_value"
+                style="@style/Text.Black.Medium"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/tv_air_date_title"
+                tools:text="2016-05-18" />
+
+            <!-- Episodes title -->
 
             <TextView
-                android:id="@+id/tv_show_overview"
-                style="@style/Text.DarkGrey.Medium"
+                android:id="@+id/tv_episodes_title"
+                style="@style/Text.DarkGrey.Big"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:text="@string/tv_show_episodes_title"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/tv_air_date_value" />
+
+            <!-- Episodes-->
+            <TextView
+                android:id="@+id/tv_seasons"
+                style="@style/Text.Black.Medium"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/tv_episodes_title"
+                tools:text="4 Seasons" />
+
+            <!-- Seasons-->
+            <TextView
+                android:id="@+id/tv_episodes"
+                style="@style/Text.Black.Medium"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="16dp"
+                app:layout_constraintLeft_toRightOf="@+id/tv_seasons"
+                app:layout_constraintTop_toBottomOf="@+id/tv_episodes_title"
+                tools:text="100 episodes" />
+
+            <!-- Similar tv shows title-->
+            <TextView
+                android:id="@+id/tv_similar_shows_title"
+                style="@style/Text.DarkGrey.Big"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="24dp"
+                android:text="@string/tv_show_similar"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/tv_episodes" />
+
+            <!-- Similar tv shows list-->
+
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/rv_similar_tv_shows"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:visibility="gone">
+
+            </android.support.v7.widget.RecyclerView>
 
         </android.support.constraint.ConstraintLayout>
 
