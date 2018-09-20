@@ -20,6 +20,8 @@ class TvShowDetailMapper {
                 tvShow.originalLanguage,
                 tvShow.backdropPath,
                 tvShow.posterPath,
+                tvShow.numberEpisodes,
+                tvShow.numberSeasons,
                 ArrayList())
     }
 }

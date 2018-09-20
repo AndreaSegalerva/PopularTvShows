@@ -19,7 +19,9 @@ class TvShowEntityMapper {
                 tvShowEntity.voteAverage,
                 tvShowEntity.originalLanguage,
                 tvShowEntity.backdropPath,
-                tvShowEntity.posterPath)
+                tvShowEntity.posterPath,
+                tvShowEntity.numberEpisodes,
+                tvShowEntity.numberSeasons)
     }
 
     fun mapList(tvShowsEntity: List<TvShowEntity>): List<TvShow> {

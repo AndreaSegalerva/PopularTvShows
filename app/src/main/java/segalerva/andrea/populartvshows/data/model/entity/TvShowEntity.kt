@@ -15,10 +15,14 @@ data class TvShowEntity(
         @SerializedName("vote_average")
         val voteAverage: Double,
         @SerializedName("vote_count")
-        val voteCount:Int,
+        val voteCount: Int,
         @SerializedName("original_language")
-        val originalLanguage:String,
+        val originalLanguage: String,
         @SerializedName("backdrop_path")
         val backdropPath: String?,
         @SerializedName("poster_path")
-        val posterPath: String?)
+        val posterPath: String?,
+        @SerializedName("number_of_episodes")
+        val numberEpisodes: Int?,
+        @SerializedName("number_of_seasons")
+        val numberSeasons: Int?)
