@@ -8,7 +8,7 @@ import segalerva.andrea.populartvshows.domain.mapper.TvShowDetailMapper
 class DomainDependencyInjector {
 
     /**
-     * Returns an instance of TvShowMapper
+     * Returns an instance of [TvShowDetailMapper]
      */
     fun getTvShowDetailMapper(): TvShowDetailMapper = TvShowDetailMapper()
 

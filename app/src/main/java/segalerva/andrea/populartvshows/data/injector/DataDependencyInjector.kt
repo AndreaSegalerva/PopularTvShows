@@ -15,12 +15,12 @@ class DataDependencyInjector {
     fun getRemoteTvShowsDataSource() = RemoteTvShowsDataSource(getRestClient())
 
     /**
-     * Returns an instance of tvShowEntityMapper needed in [PopularTvShowsMapper]
+     * Returns an instance of [TvShowEntityMapper] needed in [PopularTvShowsMapper]
      */
     fun getTvShowEntityMapper(): TvShowEntityMapper = TvShowEntityMapper()
 
     /**
-     * Returns an instance of PopularTvShowsMapper needed in [TvShowsDataRepositoryImpl]
+     * Returns an instance of [PopularTvShowsMapper] needed in [TvShowsDataRepositoryImpl]
      */
     fun getPopularTvShowsMapper(): PopularTvShowsMapper {
 
@@ -28,7 +28,7 @@ class DataDependencyInjector {
     }
 
     /**
-     * Returns an instance of TVShowsDataRepository needed in every use case defined in the domain layer
+     * Returns an instance of [TvShowsDataRepositoryImpl] needed in every use case defined in the domain layer
      */
     fun getTvShowsDataRepository(): TvShowsDataRepositoryImpl {
 
@@ -36,7 +36,7 @@ class DataDependencyInjector {
     }
 
     /**
-     * Returns an instance of RestClient used in [RemoteTvShowsDataSource]
+     * Returns an instance of [RestClient] used in [RemoteTvShowsDataSource]
      */
     private fun getRestClient(): RestClient {
         return RestClient()

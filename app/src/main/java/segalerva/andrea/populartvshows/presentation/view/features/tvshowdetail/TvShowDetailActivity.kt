@@ -13,10 +13,11 @@ class TvShowDetailActivity : BaseActivity() {
 
     companion object {
 
-        fun createIntent(activity: BaseActivity, tvShowName: String): Intent {
+        fun createIntent(activity: BaseActivity, tvShowName: String, showId: Int): Intent {
 
             val intent = Intent(activity, TvShowDetailActivity::class.java)
             intent.putExtra("tvShowName", tvShowName)
+            intent.putExtra("tvShowId", showId)
             return intent
         }
     }
@@ -25,7 +26,7 @@ class TvShowDetailActivity : BaseActivity() {
     // BaseActivity overrides
     // ------------------------------------------------------------------------------------
 
-    override fun getInitialFragment(): BaseFragment? = TvShowDetailFragment.newInstance()
+    override fun getInitialFragment(): BaseFragment? = ShowDetailFragment.newInstance()
 
 
     // ------------------------------------------------------------------------------------

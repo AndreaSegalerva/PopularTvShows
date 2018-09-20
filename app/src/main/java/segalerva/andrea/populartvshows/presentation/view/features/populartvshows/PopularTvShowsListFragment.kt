@@ -9,6 +9,7 @@ import kotlinx.android.synthetic.main.error_message_layout.*
 import kotlinx.android.synthetic.main.fragment_popular_tv_shows_list.*
 import segalerva.andrea.populartvshows.R
 import segalerva.andrea.populartvshows.data.injector.DataDependencyInjector
+import segalerva.andrea.populartvshows.domain.injector.DomainDependencyInjector
 import segalerva.andrea.populartvshows.extensions.hide
 import segalerva.andrea.populartvshows.extensions.show
 import segalerva.andrea.populartvshows.presentation.model.TvShowView
@@ -25,7 +26,8 @@ class PopularTvShowsListFragment : BaseFragment(), PopularTvShowsListView {
     private lateinit var adapter: PopularTvShowsListAdapter
     private var presenter: PopularTvShowsListPresenter
     private var dataDependencyInjector = DataDependencyInjector()
-    private var presentationDependencyInjector: PresentationDependencyInjector = PresentationDependencyInjector(dataDependencyInjector)
+    private var domainDependencyInjector = DomainDependencyInjector()
+    private var presentationDependencyInjector: PresentationDependencyInjector = PresentationDependencyInjector(dataDependencyInjector, domainDependencyInjector)
 
     private var isAlreadyLoading = false
     private var numberElementsPerPage = 20
@@ -120,7 +122,8 @@ class PopularTvShowsListFragment : BaseFragment(), PopularTvShowsListView {
     override fun navigateToTvShowDetail(tvShowView: TvShowView) {
 
         if (getBaseActivity() != null) {
-            startActivity(TvShowDetailActivity.createIntent(getBaseActivity()!!, tvShowView.name))
+            startActivity(TvShowDetailActivity.
+                    createIntent(getBaseActivity()!!, tvShowView.name, tvShowView.id))
         }
     }
 
