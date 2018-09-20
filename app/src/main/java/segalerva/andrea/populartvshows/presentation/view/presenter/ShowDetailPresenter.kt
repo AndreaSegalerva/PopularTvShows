@@ -2,6 +2,8 @@ package segalerva.andrea.populartvshows.presentation.view.presenter
 
 import segalerva.andrea.populartvshows.domain.interactor.callback.BaseDisposableObserver
 import segalerva.andrea.populartvshows.domain.interactor.usecases.similartvshows.GetSimilarTvShowsParams
+import segalerva.andrea.populartvshows.domain.model.PopularTvShows
+import segalerva.andrea.populartvshows.domain.model.TvShow
 import segalerva.andrea.populartvshows.domain.model.TvShowDetail
 import segalerva.andrea.populartvshows.presentation.injector.PresentationDependencyInjector
 import segalerva.andrea.populartvshows.presentation.model.TvShowDetailView
@@ -16,12 +18,16 @@ class ShowDetailPresenter(private val view: ShowDetailView, private val presenta
     override fun getView(): BaseView? = view
 
     private lateinit var tvShowDetailView: TvShowDetailView
+    private var currentSimilarTvShowsPage = 0
+    private var totalSimilarTvShowsPages = 0
 
     fun getTvShowByIdData(showId: Int) {
 
         view.showLoading()
 
-        presentationDependencyInjector.getTvshowDetail().execute(object : BaseDisposableObserver<TvShowDetail>() {
+        currentSimilarTvShowsPage = 1
+
+        presentationDependencyInjector.getTvShowDetail().execute(object : BaseDisposableObserver<TvShowDetail>() {
 
             override fun onError(e: Throwable) {
                 super.onError(e)
@@ -40,10 +46,11 @@ class ShowDetailPresenter(private val view: ShowDetailView, private val presenta
 
                     view.hideLoading()
                     showPrincipalTvShowInformation()
+                    showSimilarTvShows()
                 }
             }
 
-        }, GetSimilarTvShowsParams(showId, 1))
+        }, GetSimilarTvShowsParams(showId, currentSimilarTvShowsPage))
     }
 
     // ------------------------------------------------------------------------------------
@@ -67,7 +74,17 @@ class ShowDetailPresenter(private val view: ShowDetailView, private val presenta
         if (tvShowDetailView.numberSeasons != null) {
             view.showNumberSeasons(tvShowDetailView.numberSeasons!!)
         }
+    }
 
+    private fun showSimilarTvShows() {
+
+        if (tvShowDetailView.similarShows.isNotEmpty()) {
+
+            view.showSimilarTvShows(tvShowDetailView.similarShows)
+        } else {
+
+            //TODO show empty view
+        }
     }
 }
 

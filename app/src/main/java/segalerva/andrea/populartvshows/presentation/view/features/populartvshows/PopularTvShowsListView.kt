@@ -8,7 +8,7 @@ import segalerva.andrea.populartvshows.presentation.view.base.BaseView
  */
 interface PopularTvShowsListView : BaseView {
 
-    fun populateTvShows(tvShowViews: List<TvShowView>)
+    fun showTvShows(tvShowViews: List<TvShowView>)
     fun disableLoadMore()
     fun hideTvShowsList()
     fun hideMoreLoading()

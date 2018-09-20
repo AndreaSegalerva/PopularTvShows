@@ -93,7 +93,7 @@ class PopularTvShowsListFragment : BaseFragment(), PopularTvShowsListView {
     // PopularTvShowsListView overrides
     // ------------------------------------------------------------------------------------
 
-    override fun populateTvShows(tvShowViews: List<TvShowView>) {
+    override fun showTvShows(tvShowViews: List<TvShowView>) {
 
         rv_popular_tv_shows.show()
         isAlreadyLoading = false

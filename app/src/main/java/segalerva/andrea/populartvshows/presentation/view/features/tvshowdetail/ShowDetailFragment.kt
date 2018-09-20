@@ -1,5 +1,6 @@
 package segalerva.andrea.populartvshows.presentation.view.features.tvshowdetail
 
+import android.support.v7.widget.LinearLayoutManager
 import kotlinx.android.synthetic.main.fragment_tv_show_detail.*
 import segalerva.andrea.populartvshows.R
 import segalerva.andrea.populartvshows.data.injector.DataDependencyInjector
@@ -8,6 +9,7 @@ import segalerva.andrea.populartvshows.extensions.hide
 import segalerva.andrea.populartvshows.extensions.loadImage
 import segalerva.andrea.populartvshows.extensions.show
 import segalerva.andrea.populartvshows.presentation.injector.PresentationDependencyInjector
+import segalerva.andrea.populartvshows.presentation.model.TvShowView
 import segalerva.andrea.populartvshows.presentation.view.base.BaseFragment
 import segalerva.andrea.populartvshows.presentation.view.presenter.ShowDetailPresenter
 
@@ -21,8 +23,10 @@ class ShowDetailFragment : BaseFragment(), ShowDetailView {
     private var domainDependencyInjector = DomainDependencyInjector()
     private var presentationDependencyInjector: PresentationDependencyInjector = PresentationDependencyInjector(dataDependencyInjector, domainDependencyInjector)
 
+    private lateinit var adapter: SimilarShowListAdapter
     private var tvShowName = ""
     private var tvShowId: Int? = null
+    private var isAlreadyLoading = false
 
     companion object {
 
@@ -48,6 +52,7 @@ class ShowDetailFragment : BaseFragment(), ShowDetailView {
 
         prepareArguments()
         initializeViewComponents()
+        prepareRecyclerView()
 
         if (tvShowId != null) {
 
@@ -112,6 +117,13 @@ class ShowDetailFragment : BaseFragment(), ShowDetailView {
         tv_episodes.text = getString(R.string.tv_show_episodes, numberEpisodes)
     }
 
+    override fun showSimilarTvShows(similarTvShows: List<TvShowView>) {
+
+        rv_similar_tv_shows.show()
+        isAlreadyLoading = false
+        adapter.addTvShows(similarTvShows)
+    }
+
     // ------------------------------------------------------------------------------------
     // Private methods
     // ------------------------------------------------------------------------------------
@@ -128,5 +140,16 @@ class ShowDetailFragment : BaseFragment(), ShowDetailView {
                 tvShowId = arguments!!.getInt("tvShowId")
             }
         }
+    }
+
+    private fun prepareRecyclerView() {
+
+        adapter = SimilarShowListAdapter(context!!)
+        rv_similar_tv_shows.layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
+        rv_similar_tv_shows.adapter = adapter
+
+
+        //TODO add OnScrollListener
+        //TODO add on click listener
     }
 }

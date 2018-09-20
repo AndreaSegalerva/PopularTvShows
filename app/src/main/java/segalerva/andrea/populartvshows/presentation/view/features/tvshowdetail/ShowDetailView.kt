@@ -1,5 +1,6 @@
 package segalerva.andrea.populartvshows.presentation.view.features.tvshowdetail
 
+import segalerva.andrea.populartvshows.presentation.model.TvShowView
 import segalerva.andrea.populartvshows.presentation.view.base.BaseView
 
 /**
@@ -13,5 +14,5 @@ interface ShowDetailView : BaseView {
     fun showAirDate(airDate: String)
     fun showNumberSeasons(numberSeasons: Int)
     fun showNumberEpisodes(numberEpisodes: Int)
-    //TODO similar tvShows
+    fun showSimilarTvShows(similarTvShows: List<TvShowView>)
 }

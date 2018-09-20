@@ -3,6 +3,7 @@ package segalerva.andrea.populartvshows.presentation.injector
 import segalerva.andrea.populartvshows.data.injector.DataDependencyInjector
 import segalerva.andrea.populartvshows.domain.injector.DomainDependencyInjector
 import segalerva.andrea.populartvshows.domain.interactor.usecases.populartvshows.GetPopularTvShows
+import segalerva.andrea.populartvshows.domain.interactor.usecases.similartvshows.GetSimilarTvShows
 import segalerva.andrea.populartvshows.domain.interactor.usecases.tvshowdetail.GetTvShowDetail
 import segalerva.andrea.populartvshows.presentation.mapper.TvShowDetailMapper
 import segalerva.andrea.populartvshows.presentation.mapper.TvShowMapper
@@ -22,6 +23,22 @@ class PresentationDependencyInjector(private val dataDependencyInjector: DataDep
     }
 
     /**
+     * Returns an instance of the use case [GetTvShowDetail] use case
+     */
+    fun getTvShowDetail(): GetTvShowDetail {
+
+        return GetTvShowDetail(dataDependencyInjector, domainDependencyInjector)
+    }
+
+    /**
+     * Returns an instance of the use case [GetSimilarTvShows] use case
+     */
+    fun getSimilarTvShows(): GetSimilarTvShows {
+
+        return GetSimilarTvShows(dataDependencyInjector)
+    }
+
+    /**
      * Returns an instance of [TvShowMapper]
      */
     fun getTvShowMapper(): TvShowMapper = TvShowMapper()
@@ -34,13 +51,4 @@ class PresentationDependencyInjector(private val dataDependencyInjector: DataDep
 
         return TvShowDetailMapper(getTvShowMapper())
     }
-
-    /**
-     * Returns an instance of the use case [GetTvShowDetail] use case
-     */
-    fun getTvshowDetail(): GetTvShowDetail {
-
-        return GetTvShowDetail(dataDependencyInjector, domainDependencyInjector)
-    }
-
 }

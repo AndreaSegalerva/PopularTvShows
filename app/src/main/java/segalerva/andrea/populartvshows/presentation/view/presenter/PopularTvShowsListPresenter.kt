@@ -20,7 +20,6 @@ class PopularTvShowsListPresenter(private val view: PopularTvShowsListView, priv
     override fun getView(): BaseView = view
     private var totalPages = 0
     private var currentPage = 0
-    private var tvShows = ArrayList<TvShowView>()
 
     fun getPopularTvShowsData(isLoadingMore: Boolean) {
 
@@ -71,7 +70,7 @@ class PopularTvShowsListPresenter(private val view: PopularTvShowsListView, priv
                     view.hideLoading()
                     view.hideErrorMessage()
                     totalPages = response.totalPages
-                    view.populateTvShows(presentationDependencyInjector.getTvShowMapper().mapList(response.shows))
+                    view.showTvShows(presentationDependencyInjector.getTvShowMapper().mapList(response.shows))
                 }
             }
         }, currentPage)

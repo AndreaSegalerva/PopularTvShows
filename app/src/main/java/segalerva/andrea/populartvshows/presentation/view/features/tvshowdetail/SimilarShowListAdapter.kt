@@ -1,4 +1,4 @@
-package segalerva.andrea.populartvshows.presentation.view.features.populartvshows
+package segalerva.andrea.populartvshows.presentation.view.features.tvshowdetail
 
 import android.content.Context
 import android.support.v7.widget.RecyclerView
@@ -6,18 +6,20 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import kotlinx.android.synthetic.main.cell_load_more.view.*
-import kotlinx.android.synthetic.main.cell_tv_show.view.*
+import kotlinx.android.synthetic.main.cell_load_more_vertical.view.*
+import kotlinx.android.synthetic.main.cell_similar_tv_show.view.*
 import segalerva.andrea.populartvshows.R
 import segalerva.andrea.populartvshows.extensions.hide
 import segalerva.andrea.populartvshows.extensions.loadImage
 import segalerva.andrea.populartvshows.extensions.show
 import segalerva.andrea.populartvshows.presentation.model.TvShowView
+import segalerva.andrea.populartvshows.presentation.view.features.populartvshows.TvShowClickListener
 
 /**
- * Created by andrea on 16/9/18.
- * Adapter for TVShows Recycler View
+ * Created by andrea on 21/9/18.
  */
-class PopularTvShowsListAdapter(private val context: Context) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
+class SimilarShowListAdapter(private val context: Context) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
+
 
     private val typeTvShow = 0
     private val typeLoadMore = 1
@@ -25,14 +27,15 @@ class PopularTvShowsListAdapter(private val context: Context) : RecyclerView.Ada
     private var loadMoreEnabled = true
     private var tvShowClickListener: TvShowClickListener? = null
 
+
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
 
         val layoutInflater = context.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
-        val tvShowCell = layoutInflater.inflate(R.layout.cell_tv_show, parent, false)
-        val loadMoreCell = layoutInflater.inflate(R.layout.cell_load_more, parent, false)
+        val similarShowCell = layoutInflater.inflate(R.layout.cell_similar_tv_show, parent, false)
+        val loadMoreCell = layoutInflater.inflate(R.layout.cell_load_more_vertical, parent, false)
 
         return when (viewType) {
-            typeTvShow -> TvShowViewHolder(tvShowCell)
+            typeTvShow -> SimilarShowViewHolder(similarShowCell)
             typeLoadMore -> LoadMoreViewHolder(loadMoreCell)
             else -> {
                 throw IllegalArgumentException("The view type $viewType is a invalid argument invalid")
@@ -49,7 +52,7 @@ class PopularTvShowsListAdapter(private val context: Context) : RecyclerView.Ada
                 val tvShowView = getItem(position)
 
                 if (tvShowView != null) {
-                    (holder as TvShowViewHolder).bindTvShow(tvShowView)
+                    (holder as SimilarShowViewHolder).bindSimilarShow(tvShowView)
 
                     holder.itemView.setOnClickListener {
                         onItemClickListener(tvShowView)
@@ -66,6 +69,7 @@ class PopularTvShowsListAdapter(private val context: Context) : RecyclerView.Ada
                 }
             }
         }
+
     }
 
     override fun getItemCount(): Int {
@@ -82,9 +86,9 @@ class PopularTvShowsListAdapter(private val context: Context) : RecyclerView.Ada
         }
     }
 
-// ------------------------------------------------------------------------------------
-// Public methods
-// ------------------------------------------------------------------------------------
+    // ------------------------------------------------------------------------------------
+    // Public methods
+    // ------------------------------------------------------------------------------------
 
     fun addTvShows(tvShowViewList: List<TvShowView>) {
 
@@ -102,9 +106,9 @@ class PopularTvShowsListAdapter(private val context: Context) : RecyclerView.Ada
         this.tvShowClickListener = clickListener
     }
 
-// ------------------------------------------------------------------------------------
-// Private methods
-// ------------------------------------------------------------------------------------
+    // ------------------------------------------------------------------------------------
+    // Private methods
+    // ------------------------------------------------------------------------------------
 
     private fun getItem(position: Int): TvShowView? {
 
@@ -120,24 +124,21 @@ class PopularTvShowsListAdapter(private val context: Context) : RecyclerView.Ada
         tvShowClickListener?.onTvShowClicked(tvShowView)
     }
 
-// ------------------------------------------------------------------------------------
-// TvShow View Holder class
-// ------------------------------------------------------------------------------------
+    // ------------------------------------------------------------------------------------
+    // Similar Show View Holder class
+    // ------------------------------------------------------------------------------------
 
     /**
      * View Holder of tv show cell view
      * @param itemView
      */
-    class TvShowViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+    class SimilarShowViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
 
         private var view: View = itemView
 
-        fun bindTvShow(tvShowView: TvShowView) {
+        fun bindSimilarShow(tvShowView: TvShowView) {
 
-            view.tv_show_name.text = tvShowView.name
-            view.tv_votes_count_value.text = tvShowView.voteCount.toString()
-            view.tv_vote_average.text = tvShowView.voteAverage.toString()
-            view.iv_show_poster.loadImage(tvShowView.posterPath)
+            view.iv_similar_tv_show.loadImage(tvShowView.posterPath)
         }
     }
 
@@ -150,11 +151,11 @@ class PopularTvShowsListAdapter(private val context: Context) : RecyclerView.Ada
         private var view: View = itemView
 
         fun showLoadMore() {
-            view.pb_bottom_loader.show()
+            view.pb_lateral_loader.show()
         }
 
         fun hideLoadMore() {
-            view.pb_bottom_loader.hide()
+            view.pb_lateral_loader.hide()
         }
     }
 }
