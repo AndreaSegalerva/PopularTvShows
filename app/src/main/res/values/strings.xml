@@ -9,7 +9,7 @@
     <string name="dialog_no_connection_ok_button">OK</string>
     <string name="something_went_wrong">Something went wrong. Please try again later</string>
     <string name="tv_show_overview">OverView</string>
-    <string name="tv_show_air_date">Air date</string>
+    <string name="tv_show_air_date">Air date:</string>
     <string name="tv_show_episodes_title">Seasons and Episodes</string>
     <string name="tv_show_seasons">%d Seasons</string>
     <string name="tv_show_episodes">%d Episodes</string>

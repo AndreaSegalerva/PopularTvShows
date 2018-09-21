@@ -3,7 +3,6 @@ package segalerva.andrea.populartvshows.presentation.view.presenter
 import segalerva.andrea.populartvshows.domain.interactor.callback.BaseDisposableObserver
 import segalerva.andrea.populartvshows.domain.interactor.usecases.similartvshows.GetSimilarTvShowsParams
 import segalerva.andrea.populartvshows.domain.model.PopularTvShows
-import segalerva.andrea.populartvshows.domain.model.TvShow
 import segalerva.andrea.populartvshows.domain.model.TvShowDetail
 import segalerva.andrea.populartvshows.presentation.injector.PresentationDependencyInjector
 import segalerva.andrea.populartvshows.presentation.model.TvShowDetailView
@@ -63,6 +62,10 @@ class ShowDetailPresenter(private val view: ShowDetailView, private val presenta
         if (tvShowDetailView.posterPath.orEmpty().isNotEmpty()) {
 
             view.showPosterPicture(tvShowDetailView.posterPath!!)
+
+        } else if (tvShowDetailView.backdropPath.orEmpty().isNotEmpty()) {
+
+            view.showPosterPicture(tvShowDetailView.backdropPath!!)
         }
 
         view.showVoteAverage(tvShowDetailView.voteAverage.toString())
@@ -80,8 +83,10 @@ class ShowDetailPresenter(private val view: ShowDetailView, private val presenta
     private fun showSimilarTvShows() {
 
         if (tvShowDetailView.similarShows != null) {
+
             if (tvShowDetailView.similarShows!!.shows.isNotEmpty()) {
 
+                totalSimilarTvShowsPages = tvShowDetailView.similarShows!!.totalPages
                 val similarTvShows = tvShowDetailView.similarShows!!.shows
                 val similarTvShowsViews = presentationDependencyInjector.getTvShowMapper().mapList(similarTvShows)
                 view.showSimilarTvShows(similarTvShowsViews)
@@ -90,7 +95,57 @@ class ShowDetailPresenter(private val view: ShowDetailView, private val presenta
 
                 //TODO show empty view
             }
+        } else {
+            //TODO show empty view
         }
+    }
+
+    fun onLoadMore() {
+
+        if (currentSimilarTvShowsPage < totalSimilarTvShowsPages) {
+
+            executeGetSimilarTvShows(currentSimilarTvShowsPage)
+        } else {
+            view.disableLoadMoreSimilarTvShows()
+        }
+    }
+
+
+    fun onTvShowClicked(tvShowView: TvShowView) {
+
+        view.navigateToTvShowDetail(tvShowView.id, tvShowView.name)
+    }
+
+
+    private fun executeGetSimilarTvShows(page: Int) {
+
+        currentSimilarTvShowsPage = page + 1
+
+        presentationDependencyInjector.getSimilarTvShows().execute(object : BaseDisposableObserver<PopularTvShows>() {
+
+            override fun onError(e: Throwable) {
+                super.onError(e)
+
+                if (isSafeManipulateView()) {
+                    view.hideLoading()
+                }
+            }
+
+            override fun onNext(response: PopularTvShows) {
+                super.onNext(response)
+
+                if (isSafeManipulateView()) {
+
+                    if (response.shows.isNotEmpty()) {
+
+                        val similarTvShowsViews = presentationDependencyInjector.getTvShowMapper().mapList(response.shows)
+                        view.showSimilarTvShows(similarTvShowsViews)
+                    } else {
+                        view.disableLoadMoreSimilarTvShows()
+                    }
+                }
+            }
+        }, GetSimilarTvShowsParams(tvShowDetailView.id, currentSimilarTvShowsPage))
     }
 }
 

@@ -71,6 +71,8 @@
                 android:id="@+id/iv_star"
                 android:layout_width="24dp"
                 android:layout_height="24dp"
+                android:visibility="gone"
+                tools:visibility="visible"
                 android:src="@drawable/ic_star"
                 android:tint="@color/yellow"
                 app:layout_constraintLeft_toLeftOf="parent"
@@ -95,8 +97,10 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
                 android:text="@string/tv_show_overview"
+                android:visibility="gone"
                 app:layout_constraintLeft_toLeftOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/tv_vote_average" />
+                app:layout_constraintTop_toBottomOf="@+id/tv_vote_average"
+                tools:visibility="visible" />
 
             <!-- OverView description-->
             <TextView
@@ -117,8 +121,10 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
                 android:text="@string/tv_show_air_date"
+                android:visibility="gone"
                 app:layout_constraintLeft_toLeftOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/tv_overview_description" />
+                app:layout_constraintTop_toBottomOf="@id/tv_overview_description"
+                tools:visibility="visible" />
 
             <!-- Air date value-->
             <TextView
@@ -126,9 +132,11 @@
                 style="@style/Text.Black.Medium"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="16dp"
-                app:layout_constraintLeft_toLeftOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/tv_air_date_title"
+                android:layout_marginStart="8dp"
+                android:textAlignment="textStart"
+                app:layout_constraintBaseline_toBaselineOf="@+id/tv_air_date_title"
+                app:layout_constraintStart_toEndOf="@+id/tv_air_date_title"
+                app:layout_constraintTop_toBottomOf="@+id/tv_overview_description"
                 tools:text="2016-05-18" />
 
             <!-- Episodes title -->
@@ -140,8 +148,10 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
                 android:text="@string/tv_show_episodes_title"
+                android:visibility="gone"
                 app:layout_constraintLeft_toLeftOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/tv_air_date_value" />
+                app:layout_constraintTop_toBottomOf="@+id/tv_air_date_value"
+                tools:visibility="visible" />
 
             <!-- Episodes-->
             <TextView
@@ -161,7 +171,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="16dp"
-                android:layout_marginTop="16dp"
+                app:layout_constraintBaseline_toBaselineOf="@+id/tv_seasons"
                 app:layout_constraintLeft_toRightOf="@+id/tv_seasons"
                 app:layout_constraintTop_toBottomOf="@+id/tv_episodes_title"
                 tools:text="100 episodes" />
@@ -174,8 +184,10 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="24dp"
                 android:text="@string/tv_show_similar"
+                android:visibility="gone"
                 app:layout_constraintLeft_toLeftOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/tv_episodes" />
+                app:layout_constraintTop_toBottomOf="@+id/tv_episodes"
+                tools:visibility="visible" />
 
             <!-- Similar tv shows list-->
 
@@ -184,9 +196,11 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
+                android:scrollbars="horizontal"
                 android:visibility="gone"
                 app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/tv_similar_shows_title">
+                app:layout_constraintTop_toBottomOf="@+id/tv_similar_shows_title"
+                tools:visibility="visible">
 
             </android.support.v7.widget.RecyclerView>
 
