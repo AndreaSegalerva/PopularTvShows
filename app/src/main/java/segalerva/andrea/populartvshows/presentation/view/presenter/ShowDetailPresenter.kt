@@ -76,7 +76,7 @@ class ShowDetailPresenter(private val view: ShowDetailView, private val presenta
 
             view.navigateToTvShowDetail(tvShowView.id, tvShowView.name)
         } else {
-            showInternetConnectionMessage()
+            view.showConnectionDialog()
         }
     }
 

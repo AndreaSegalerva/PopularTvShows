@@ -43,7 +43,11 @@ class PopularTvShowsListPresenter(private val view: PopularTvShowsListView, priv
 
     fun onTvShowClicked(tvShowView: TvShowView) {
 
-        view.navigateToTvShowDetail(tvShowView)
+        if (isConnectedToInternet()) {
+            view.navigateToTvShowDetail(tvShowView)
+        } else {
+            view.showConnectionDialog()
+        }
     }
 
     // ------------------------------------------------------------------------------------
