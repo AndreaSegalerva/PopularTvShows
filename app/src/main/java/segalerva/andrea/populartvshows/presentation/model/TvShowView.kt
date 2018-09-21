@@ -7,7 +7,7 @@ data class TvShowView(
         val id: Int,
         val name: String,
         val posterPath: String?,
-        val overview: String,
+        val overview: String?,
         val voteCount: Int,
         val voteAverage: Double,
         val originalLanguage: String)

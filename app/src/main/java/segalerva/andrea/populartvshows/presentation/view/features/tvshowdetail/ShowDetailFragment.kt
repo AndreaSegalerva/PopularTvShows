@@ -7,6 +7,7 @@ import android.support.v7.widget.RecyclerView
 import android.util.Log
 import android.view.Gravity
 import android.widget.Toast
+import kotlinx.android.synthetic.main.cell_load_more_vertical.*
 import kotlinx.android.synthetic.main.fragment_tv_show_detail.*
 import segalerva.andrea.populartvshows.R
 import segalerva.andrea.populartvshows.data.injector.DataDependencyInjector
@@ -84,7 +85,7 @@ class ShowDetailFragment : BaseFragment(), ShowDetailView {
             alertDialog.setTitle(context!!.getString(R.string.dialog_no_connection_title))
             alertDialog.setMessage(context!!.getString(R.string.dialog_need_internet_connection_message))
             alertDialog.setPositiveButton(context!!.getString(R.string.dialog_no_connection_ok_button)) { _, _ ->
-                Log.d(getFragmentTag(), "Okey clicked")
+                Log.d(getFragmentTag(), "Ok clicked")
             }.show()
         }
     }
@@ -171,6 +172,11 @@ class ShowDetailFragment : BaseFragment(), ShowDetailView {
     override fun navigateToTvShowDetail(showId: Int, showName: String) {
 
         startActivity(createIntent(getBaseActivity()!!, showName, showId))
+    }
+
+    override fun hideLoadMore() {
+
+        pb_lateral_loader.hide()
     }
 
     override fun showToastMessage(message: Int) {

@@ -35,6 +35,7 @@ class ShowDetailPresenter(private val view: ShowDetailView, private val presenta
 
                 if (isSafeManipulateView()) {
                     view.hideLoading()
+                    view.showToastMessage(R.string.something_went_wrong)
                 }
             }
 
@@ -85,6 +86,7 @@ class ShowDetailPresenter(private val view: ShowDetailView, private val presenta
 
     private fun showPrincipalTvShowInformation() {
 
+        // Poster
         if (tvShowDetailView.posterPath.orEmpty().isNotEmpty()) {
 
             view.showPosterPicture(tvShowDetailView.posterPath!!)
@@ -94,13 +96,25 @@ class ShowDetailPresenter(private val view: ShowDetailView, private val presenta
             view.showPosterPicture(tvShowDetailView.backdropPath!!)
         }
 
+        // Vote average
         view.showVoteAverage(tvShowDetailView.voteAverage.toString())
-        view.showOverView(tvShowDetailView.overView)
-        view.showAirDate(tvShowDetailView.airDate)
 
+        // Overview
+        if (tvShowDetailView.overView != null) {
+            view.showOverView(tvShowDetailView.overView!!)
+        }
+
+        // Air date
+        if (tvShowDetailView.airDate != null) {
+            view.showAirDate(tvShowDetailView.airDate!!)
+        }
+
+        // Number of episodes
         if (tvShowDetailView.numberEpisodes != null) {
             view.showNumberEpisodes(tvShowDetailView.numberEpisodes!!)
         }
+
+        // Number of seasons
         if (tvShowDetailView.numberSeasons != null) {
             view.showNumberSeasons(tvShowDetailView.numberSeasons!!)
         }
@@ -140,6 +154,8 @@ class ShowDetailPresenter(private val view: ShowDetailView, private val presenta
 
                 if (isSafeManipulateView()) {
                     view.hideLoading()
+                    view.hideLoadMore()
+                    view.showToastMessage(R.string.something_went_wrong)
                 }
             }
 

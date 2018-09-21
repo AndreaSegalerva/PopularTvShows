@@ -10,8 +10,8 @@ data class TvShowEntity(
         @SerializedName("original_name")
         val originalName: String,
         @SerializedName("first_air_date")
-        val airDate: String,
-        val overview: String,
+        val airDate: String?,
+        val overview: String?,
         @SerializedName("vote_average")
         val voteAverage: Double,
         @SerializedName("vote_count")

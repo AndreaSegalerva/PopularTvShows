@@ -20,4 +20,5 @@ interface ShowDetailView : BaseView {
     fun disableLoadMoreSimilarTvShows()
     fun navigateToTvShowDetail(showId: Int,showName:String)
     fun showToastMessage(@StringRes message: Int)
+    fun hideLoadMore()
 }

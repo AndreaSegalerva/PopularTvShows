@@ -8,8 +8,8 @@ import segalerva.andrea.populartvshows.domain.model.PopularTvShows
 data class TvShowDetailView(
         val id: Int,
         val originalName: String,
-        val airDate: String,
-        val overView: String,
+        val airDate: String?,
+        val overView: String?,
         val voteCount: Int,
         val voteAverage: Double,
         val originalLanguage: String,
