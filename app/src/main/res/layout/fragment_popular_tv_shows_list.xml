@@ -4,16 +4,24 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <!-- Recycler View for the tv show list -->
-    <android.support.v7.widget.RecyclerView
-        android:id="@+id/rv_popular_tv_shows"
+    <!-- Swipe Refresh Layout -->
+    <android.support.v4.widget.SwipeRefreshLayout
+        android:id="@+id/srl_popular_tv_shows"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:visibility="gone"
         app:layout_constraintLeft_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
-    </android.support.v7.widget.RecyclerView>
+        <!-- Recycler View for the tv show list -->
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/rv_popular_tv_shows"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:visibility="gone">
+
+        </android.support.v7.widget.RecyclerView>
+
+    </android.support.v4.widget.SwipeRefreshLayout>
 
     <!-- Error message -->
     <include

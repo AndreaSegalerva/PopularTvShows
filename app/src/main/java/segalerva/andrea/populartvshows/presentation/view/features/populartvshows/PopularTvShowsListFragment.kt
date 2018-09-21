@@ -49,8 +49,8 @@ class PopularTvShowsListFragment : BaseFragment(), PopularTvShowsListView {
     override fun prepareView() {
 
         prepareRecyclerView()
-        setOnClickListeners()
-        presenter.getPopularTvShowsData(false)
+        prepareSwipeRefreshLayout()
+        presenter.getPopularTvShowsData(true,false)
     }
 
     override fun showLoading() {
@@ -81,6 +81,7 @@ class PopularTvShowsListFragment : BaseFragment(), PopularTvShowsListView {
     override fun showErrorMessage(message: Int) {
 
         incl_error_message.show()
+        isAlreadyLoading = false
         tv_error_message.text = context!!.getText(message)
     }
 
@@ -100,6 +101,11 @@ class PopularTvShowsListFragment : BaseFragment(), PopularTvShowsListView {
         this.adapter.addTvShows(tvShowViews)
     }
 
+    override fun cleanListTvShows() {
+
+        this.adapter.cleanTvShows()
+    }
+
     override fun hideTvShowsList() {
 
         rv_popular_tv_shows.hide()
@@ -107,6 +113,12 @@ class PopularTvShowsListFragment : BaseFragment(), PopularTvShowsListView {
 
     override fun hideMoreLoading() {
         pb_bottom_loader.hide()
+    }
+
+    override fun enableSwipeRefreshLayout() {
+
+        srl_popular_tv_shows.isRefreshing = false
+        srl_popular_tv_shows.isEnabled = true
     }
 
     override fun disableLoadMore() {
@@ -146,6 +158,28 @@ class PopularTvShowsListFragment : BaseFragment(), PopularTvShowsListView {
         })
     }
 
+    private fun prepareSwipeRefreshLayout() {
+
+        srl_popular_tv_shows.setColorSchemeResources(R.color.colorPrimary)
+        srl_popular_tv_shows.setOnRefreshListener {
+
+            srl_popular_tv_shows.isEnabled = true
+
+            if (!isAlreadyLoading) {
+
+                prepareLoaderArguments()
+                presenter.onRefresh()
+            }
+        }
+    }
+
+    private fun prepareLoaderArguments() {
+
+        srl_popular_tv_shows.isRefreshing = true
+        srl_popular_tv_shows.isEnabled = false
+        isAlreadyLoading = true
+    }
+
     private fun addOnScrollListener() {
 
         rv_popular_tv_shows.addOnScrollListener(object : RecyclerView.OnScrollListener() {
@@ -172,13 +206,5 @@ class PopularTvShowsListFragment : BaseFragment(), PopularTvShowsListView {
         val firstVisibleItemPosition = layoutManager.findFirstVisibleItemPosition()
 
         return !isAlreadyLoading && (firstVisibleItemPosition + visibleItems) >= totalItems && totalItems >= numberElementsPerPage
-    }
-
-    private fun setOnClickListeners() {
-
-        btn_try_again.setOnClickListener {
-
-            presenter.onTryAgainClicked()
-        }
     }
 }

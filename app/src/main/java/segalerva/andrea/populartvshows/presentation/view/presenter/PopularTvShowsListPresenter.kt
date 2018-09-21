@@ -21,24 +21,25 @@ class PopularTvShowsListPresenter(private val view: PopularTvShowsListView, priv
     private var totalPages = 0
     private var currentPage = 0
 
-    fun getPopularTvShowsData(isLoadingMore: Boolean) {
+    fun getPopularTvShowsData(showNormalLoader: Boolean, isPullingToRefresh: Boolean) {
 
         if (isConnectedToInternet()) {
 
-            if (!isLoadingMore) {
+            if (showNormalLoader) {
                 view.showLoading()
             }
-            executeGetPopularTvShows(currentPage)
+            executeGetPopularTvShows(currentPage, isPullingToRefresh)
 
         } else {
 
+            view.enableSwipeRefreshLayout()
             showInternetConnectionMessage()
         }
     }
 
-    fun onTryAgainClicked() {
-
-        getPopularTvShowsData(false)
+    fun onRefresh() {
+        currentPage = 0
+        getPopularTvShowsData(true, true)
     }
 
     fun onTvShowClicked(tvShowView: TvShowView) {
@@ -54,7 +55,7 @@ class PopularTvShowsListPresenter(private val view: PopularTvShowsListView, priv
     // Private methods
     // ------------------------------------------------------------------------------------
 
-    private fun executeGetPopularTvShows(page: Int) {
+    private fun executeGetPopularTvShows(page: Int, isPullingToRefresh: Boolean) {
 
         currentPage = page + 1
         presentationDependencyInjector.getPopularTvShows().execute(object : BaseDisposableObserver<PopularTvShows>() {
@@ -64,6 +65,7 @@ class PopularTvShowsListPresenter(private val view: PopularTvShowsListView, priv
                 if (isSafeManipulateView()) {
 
                     view.hideLoading()
+                    view.enableSwipeRefreshLayout()
                     view.showErrorMessage(R.string.something_went_wrong)
                 }
             }
@@ -73,7 +75,14 @@ class PopularTvShowsListPresenter(private val view: PopularTvShowsListView, priv
                 if (isSafeManipulateView()) {
                     view.hideLoading()
                     view.hideErrorMessage()
+                    view.enableSwipeRefreshLayout()
                     totalPages = response.totalPages
+
+                    //If is pulling to refreshing we clear the adapter list
+                    if (isPullingToRefresh) {
+                        view.cleanListTvShows()
+                    }
+
                     view.showTvShows(presentationDependencyInjector.getTvShowMapper().mapList(response.shows))
                 }
             }
@@ -88,7 +97,7 @@ class PopularTvShowsListPresenter(private val view: PopularTvShowsListView, priv
 
         if (currentPage < totalPages) {
 
-            getPopularTvShowsData(true)
+            getPopularTvShowsData(false, false)
 
         } else {
 

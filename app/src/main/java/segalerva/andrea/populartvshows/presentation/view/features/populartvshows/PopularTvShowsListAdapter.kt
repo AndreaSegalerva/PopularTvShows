@@ -92,6 +92,10 @@ class PopularTvShowsListAdapter(private val context: Context) : RecyclerView.Ada
         this.notifyDataSetChanged()
     }
 
+    fun cleanTvShows() {
+        tvShows.clear()
+    }
+
     fun setLoadMoreEnabled(enable: Boolean) {
 
         loadMoreEnabled = enable
@@ -101,6 +105,7 @@ class PopularTvShowsListAdapter(private val context: Context) : RecyclerView.Ada
 
         this.tvShowClickListener = clickListener
     }
+
 
 // ------------------------------------------------------------------------------------
 // Private methods
