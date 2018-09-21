@@ -1,8 +1,10 @@
 package segalerva.andrea.populartvshows.presentation.view.features.tvshowdetail
 
+import android.app.AlertDialog
 import android.content.Intent
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
+import android.util.Log
 import kotlinx.android.synthetic.main.fragment_tv_show_detail.*
 import segalerva.andrea.populartvshows.R
 import segalerva.andrea.populartvshows.data.injector.DataDependencyInjector
@@ -70,12 +72,29 @@ class ShowDetailFragment : BaseFragment(), ShowDetailView {
         (getBaseActivity() as TvShowDetailActivity).configureToolbar(toolbar, tvShowName)
     }
 
+    override fun showConnectionDialog() {
+        super.showConnectionDialog()
+
+        if (context != null) {
+
+            val alertDialog = AlertDialog.Builder(context)
+            alertDialog.setTitle(context!!.getString(R.string.dialog_no_connection_title))
+            alertDialog.setMessage(context!!.getString(R.string.dialog_need_internet_connection_message))
+            alertDialog.setPositiveButton(context!!.getString(R.string.dialog_no_connection_ok_button)) { _, _ ->
+                Log.d(getFragmentTag(), "Okey clicked")
+            }.show()
+        }
+    }
+
     override fun showErrorMessage(message: Int) {
 
+        tv_missing_internet_connection.show()
+        tv_missing_internet_connection.text = getString(message)
     }
 
     override fun hideErrorMessage() {
 
+        tv_missing_internet_connection.hide()
     }
 
     override fun showLoading() {
@@ -133,6 +152,11 @@ class ShowDetailFragment : BaseFragment(), ShowDetailView {
         rv_similar_tv_shows.show()
         isAlreadyLoading = false
         adapter.addTvShows(similarTvShows)
+    }
+
+    override fun hideSimilarTvShows() {
+
+        rv_similar_tv_shows.hide()
     }
 
     override fun disableLoadMoreSimilarTvShows() {

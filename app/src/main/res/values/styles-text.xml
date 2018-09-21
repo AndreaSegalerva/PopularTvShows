@@ -15,6 +15,10 @@
         <item name="android:textColor">@color/black</item>
     </style>
 
+    <style name="Text.Orange">
+        <item name="android:textColor">@color/orange</item>
+    </style>
+
     <style name="Text.LightGrey.Small">
         <item name="android:textSize">12sp</item>
     </style>
@@ -44,6 +48,18 @@
     </style>
 
     <style name="Text.Black.Big">
+        <item name="android:textSize">22sp</item>
+    </style>
+
+    <style name="Text.Orange.Small">
+        <item name="android:textSize">12sp</item>
+    </style>
+
+    <style name="Text.Orange.Medium">
+        <item name="android:textSize">16sp</item>
+    </style>
+
+    <style name="Text.Orange.Big">
         <item name="android:textSize">22sp</item>
     </style>
 </resources>

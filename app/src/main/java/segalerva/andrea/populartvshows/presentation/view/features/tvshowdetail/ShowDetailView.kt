@@ -15,6 +15,7 @@ interface ShowDetailView : BaseView {
     fun showNumberSeasons(numberSeasons: Int)
     fun showNumberEpisodes(numberEpisodes: Int)
     fun showSimilarTvShows(similarTvShows: List<TvShowView>)
+    fun hideSimilarTvShows()
     fun disableLoadMoreSimilarTvShows()
     fun navigateToTvShowDetail(showId: Int,showName:String)
 }

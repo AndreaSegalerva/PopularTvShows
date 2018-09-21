@@ -204,6 +204,17 @@
 
             </android.support.v7.widget.RecyclerView>
 
+            <!-- Missing internet connection-->
+            <TextView
+                android:id="@+id/tv_missing_internet_connection"
+                style="@style/Text.Orange.Medium"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:visibility="gone"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/tv_similar_shows_title"
+                android:textAlignment="center"/>
         </android.support.constraint.ConstraintLayout>
 
     </android.support.v4.widget.NestedScrollView>
