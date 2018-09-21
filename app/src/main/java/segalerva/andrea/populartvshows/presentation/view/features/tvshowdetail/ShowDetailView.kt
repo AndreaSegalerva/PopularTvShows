@@ -1,5 +1,6 @@
 package segalerva.andrea.populartvshows.presentation.view.features.tvshowdetail
 
+import android.support.annotation.StringRes
 import segalerva.andrea.populartvshows.presentation.model.TvShowView
 import segalerva.andrea.populartvshows.presentation.view.base.BaseView
 
@@ -18,4 +19,5 @@ interface ShowDetailView : BaseView {
     fun hideSimilarTvShows()
     fun disableLoadMoreSimilarTvShows()
     fun navigateToTvShowDetail(showId: Int,showName:String)
+    fun showToastMessage(@StringRes message: Int)
 }

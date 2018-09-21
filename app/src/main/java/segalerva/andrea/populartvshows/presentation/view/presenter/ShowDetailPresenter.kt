@@ -120,10 +120,12 @@ class ShowDetailPresenter(private val view: ShowDetailView, private val presenta
 
             } else {
 
-                //TODO show message
+                view.showToastMessage(R.string.no_similar_tv_shows)
             }
+
         } else {
-            //TODO show message
+
+            view.showToastMessage(R.string.no_similar_tv_shows)
         }
     }
 

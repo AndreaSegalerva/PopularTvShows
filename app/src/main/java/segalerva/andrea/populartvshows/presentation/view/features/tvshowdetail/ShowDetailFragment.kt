@@ -5,6 +5,8 @@ import android.content.Intent
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
 import android.util.Log
+import android.view.Gravity
+import android.widget.Toast
 import kotlinx.android.synthetic.main.fragment_tv_show_detail.*
 import segalerva.andrea.populartvshows.R
 import segalerva.andrea.populartvshows.data.injector.DataDependencyInjector
@@ -12,6 +14,7 @@ import segalerva.andrea.populartvshows.domain.injector.DomainDependencyInjector
 import segalerva.andrea.populartvshows.extensions.hide
 import segalerva.andrea.populartvshows.extensions.loadImage
 import segalerva.andrea.populartvshows.extensions.show
+import segalerva.andrea.populartvshows.extensions.showToast
 import segalerva.andrea.populartvshows.presentation.injector.PresentationDependencyInjector
 import segalerva.andrea.populartvshows.presentation.model.TvShowView
 import segalerva.andrea.populartvshows.presentation.view.base.BaseFragment
@@ -168,6 +171,15 @@ class ShowDetailFragment : BaseFragment(), ShowDetailView {
     override fun navigateToTvShowDetail(showId: Int, showName: String) {
 
         startActivity(createIntent(getBaseActivity()!!, showName, showId))
+    }
+
+    override fun showToastMessage(message: Int) {
+
+        if (context != null) {
+
+            val toast = Toast(context)
+            toast.showToast(context!!, getString(message), Gravity.BOTTOM, Toast.LENGTH_LONG)
+        }
     }
 
     // ------------------------------------------------------------------------------------
