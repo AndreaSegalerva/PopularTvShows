@@ -8,7 +8,7 @@
 
     <TextView
         android:id="@+id/tv_error_message"
-        style="@style/Text.DarkGrey.Big"
+        style="@style/Text.Orange.Big"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textAlignment="center"
@@ -18,15 +18,19 @@
         tools:text=" Something went wrong." />
 
     <TextView
-        android:id="@+id/tv_try_again_swiping_down"
-        style="@style/Text.DarkGrey.Big.Bold"
+        android:id="@+id/tv_try_again"
+        style="@style/Text.Orange.Big.Bold"
+        android:clickable="true"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
         android:textAlignment="center"
+        android:enabled="true"
+        android:background="?selectableItemBackgroundBorderless"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/tv_error_message"
-        android:text="@string/try_again_swiping_down" />
+        android:text="@string/try_again"
+        android:focusable="true" />
 
 </android.support.constraint.ConstraintLayout>

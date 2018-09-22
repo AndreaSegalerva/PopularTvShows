@@ -11,8 +11,10 @@ interface PopularTvShowsListView : BaseView {
     fun showTvShows(tvShowViews: List<TvShowView>)
     fun cleanListTvShows()
     fun disableLoadMore()
+    fun enableLoadMore()
     fun hideTvShowsList()
     fun hideMoreLoading()
     fun enableSwipeRefreshLayout()
+    fun disableSwipeRefreshLayout()
     fun navigateToTvShowDetail(tvShowView: TvShowView)
 }
