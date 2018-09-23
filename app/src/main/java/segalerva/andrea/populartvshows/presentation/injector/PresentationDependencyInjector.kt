@@ -27,7 +27,7 @@ class PresentationDependencyInjector(private val dataDependencyInjector: DataDep
      */
     fun getTvShowDetail(): GetTvShowDetail {
 
-        return GetTvShowDetail(dataDependencyInjector, domainDependencyInjector)
+        return GetTvShowDetail(dataDependencyInjector, domainDependencyInjector,getSimilarTvShows())
     }
 
     /**
