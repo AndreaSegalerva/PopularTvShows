@@ -19,9 +19,9 @@ class ShowDetailPresenter(private val view: ShowDetailView, private val presenta
 
     override fun getView(): BaseView? = view
 
-    private lateinit var tvShowDetailView: TvShowDetailView
     private var currentSimilarTvShowsPage = 0
     private var totalSimilarTvShowsPages = 0
+    private var showId = 0
 
     /**
      * Get tv show by Id information using the use case
@@ -29,7 +29,7 @@ class ShowDetailPresenter(private val view: ShowDetailView, private val presenta
     fun getTvShowByIdData(showId: Int) {
 
         view.showLoading()
-
+        this.showId = showId
         currentSimilarTvShowsPage = 1
 
         executeGetTvShowDetail(showId)
@@ -83,7 +83,6 @@ class ShowDetailPresenter(private val view: ShowDetailView, private val presenta
         presentationDependencyInjector.getTvShowDetail().execute(object : BaseDisposableObserver<TvShowDetail>() {
 
             override fun onError(e: Throwable) {
-                super.onError(e)
 
                 if (isSafeManipulateView()) {
                     view.hideLoading()
@@ -92,14 +91,13 @@ class ShowDetailPresenter(private val view: ShowDetailView, private val presenta
             }
 
             override fun onNext(response: TvShowDetail) {
-                super.onNext(response)
 
-                tvShowDetailView = presentationDependencyInjector.getTVShowDetailMapper().map(response)
+                val tvShowDetailView = presentationDependencyInjector.getTVShowDetailMapper().map(response)
 
                 if (isSafeManipulateView()) {
 
                     view.hideLoading()
-                    showPrincipalTvShowInformation()
+                    showPrincipalTvShowInformation(tvShowDetailView)
 
                     //If similar tv shows is not empty or null prepare to show the views
                     if (tvShowDetailView.similarShows != null && tvShowDetailView.similarShows!!.shows.isNotEmpty()) {
@@ -120,7 +118,7 @@ class ShowDetailPresenter(private val view: ShowDetailView, private val presenta
     /**
      * Show the principal tv show detail information
      */
-    private fun showPrincipalTvShowInformation() {
+    private fun showPrincipalTvShowInformation(tvShowDetailView: TvShowDetailView) {
 
         // Poster
         if (tvShowDetailView.posterPath.orEmpty().isNotEmpty()) {
@@ -137,22 +135,22 @@ class ShowDetailPresenter(private val view: ShowDetailView, private val presenta
 
         // Overview
         if (tvShowDetailView.overView != null) {
-            view.showOverView(tvShowDetailView.overView!!)
+            view.showOverView(tvShowDetailView.overView)
         }
 
         // Air date
         if (tvShowDetailView.airDate != null) {
-            view.showAirDate(tvShowDetailView.airDate!!)
+            view.showAirDate(tvShowDetailView.airDate)
         }
 
         // Number of episodes
         if (tvShowDetailView.numberEpisodes != null) {
-            view.showNumberEpisodes(tvShowDetailView.numberEpisodes!!)
+            view.showNumberEpisodes(tvShowDetailView.numberEpisodes)
         }
 
         // Number of seasons
         if (tvShowDetailView.numberSeasons != null) {
-            view.showNumberSeasons(tvShowDetailView.numberSeasons!!)
+            view.showNumberSeasons(tvShowDetailView.numberSeasons)
         }
     }
 
@@ -169,7 +167,6 @@ class ShowDetailPresenter(private val view: ShowDetailView, private val presenta
         presentationDependencyInjector.getSimilarTvShows().execute(object : BaseDisposableObserver<PopularTvShows>() {
 
             override fun onError(e: Throwable) {
-                super.onError(e)
 
                 if (isSafeManipulateView()) {
                     view.hideLoading()
@@ -179,7 +176,6 @@ class ShowDetailPresenter(private val view: ShowDetailView, private val presenta
             }
 
             override fun onNext(response: PopularTvShows) {
-                super.onNext(response)
 
                 if (isSafeManipulateView()) {
 
@@ -191,7 +187,7 @@ class ShowDetailPresenter(private val view: ShowDetailView, private val presenta
                     }
                 }
             }
-        }, GetSimilarTvShowsParams(tvShowDetailView.id, currentSimilarTvShowsPage))
+        }, GetSimilarTvShowsParams(showId, currentSimilarTvShowsPage))
     }
 
     /**

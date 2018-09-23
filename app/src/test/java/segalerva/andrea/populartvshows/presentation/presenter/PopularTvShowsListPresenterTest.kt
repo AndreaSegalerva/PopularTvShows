@@ -20,6 +20,7 @@ import kotlin.test.assertEquals
 
 /**
  * Created by andrea on 23/9/18.
+ * Unit Test of the [PopularTvShowsListPresenter]
  */
 @RunWith(MockitoJUnitRunner::class)
 class PopularTvShowsListPresenterTest {
