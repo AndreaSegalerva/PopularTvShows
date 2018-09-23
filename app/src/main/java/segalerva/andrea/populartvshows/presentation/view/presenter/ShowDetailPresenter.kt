@@ -4,6 +4,7 @@ import segalerva.andrea.populartvshows.R
 import segalerva.andrea.populartvshows.domain.interactor.callback.BaseDisposableObserver
 import segalerva.andrea.populartvshows.domain.interactor.usecases.similartvshows.GetSimilarTvShowsParams
 import segalerva.andrea.populartvshows.domain.model.PopularTvShows
+import segalerva.andrea.populartvshows.domain.model.TvShow
 import segalerva.andrea.populartvshows.domain.model.TvShowDetail
 import segalerva.andrea.populartvshows.presentation.injector.PresentationDependencyInjector
 import segalerva.andrea.populartvshows.presentation.model.TvShowDetailView
@@ -22,11 +23,62 @@ class ShowDetailPresenter(private val view: ShowDetailView, private val presenta
     private var currentSimilarTvShowsPage = 0
     private var totalSimilarTvShowsPages = 0
 
+    /**
+     * Get tv show by Id information using the use case
+     */
     fun getTvShowByIdData(showId: Int) {
 
         view.showLoading()
 
         currentSimilarTvShowsPage = 1
+
+        executeGetTvShowDetail(showId)
+    }
+
+
+    /**
+     * Only load more similar tv shows if the device is connected to the internet
+     * and there are more pages to load
+     */
+    fun onLoadMore() {
+
+        if (isConnectedToInternet()) {
+
+            if (currentSimilarTvShowsPage < totalSimilarTvShowsPages) {
+
+                executeGetSimilarTvShows(currentSimilarTvShowsPage)
+            } else {
+                view.disableLoadMoreSimilarTvShows()
+            }
+        } else {
+
+            showInternetConnectionMessage()
+        }
+    }
+
+    /**
+     * When similar tv show clicked
+     * Navigate to tv show detail if device is connected to the internet
+     * If not connected, show connection dialog
+     */
+    fun onTvShowClicked(tvShowView: TvShowView) {
+
+        if (isConnectedToInternet()) {
+
+            view.navigateToTvShowDetail(tvShowView.id, tvShowView.name)
+        } else {
+            view.showConnectionDialog()
+        }
+    }
+
+    // ------------------------------------------------------------------------------------
+    // Private methods
+    // ------------------------------------------------------------------------------------
+
+    /**
+     * Execute use case getTvShowDetail
+     */
+    private fun executeGetTvShowDetail(showId: Int) {
 
         presentationDependencyInjector.getTvShowDetail().execute(object : BaseDisposableObserver<TvShowDetail>() {
 
@@ -48,42 +100,26 @@ class ShowDetailPresenter(private val view: ShowDetailView, private val presenta
 
                     view.hideLoading()
                     showPrincipalTvShowInformation()
-                    showSimilarTvShows()
+
+                    //If similar tv shows is not empty or null prepare to show the views
+                    if (tvShowDetailView.similarShows != null && tvShowDetailView.similarShows!!.shows.isNotEmpty()) {
+
+                        totalSimilarTvShowsPages = tvShowDetailView.similarShows!!.totalPages
+                        prepareSimilarTvShowsViews(tvShowDetailView.similarShows!!.shows)
+
+                    } else {
+                        // inform the user that the tv show has no similar ones
+                        view.showToastMessage(R.string.no_similar_tv_shows)
+                    }
                 }
             }
 
         }, GetSimilarTvShowsParams(showId, currentSimilarTvShowsPage))
     }
 
-    fun onLoadMore() {
-
-        if (isConnectedToInternet()) {
-            if (currentSimilarTvShowsPage < totalSimilarTvShowsPages) {
-
-                executeGetSimilarTvShows(currentSimilarTvShowsPage)
-            } else {
-                view.disableLoadMoreSimilarTvShows()
-            }
-        } else {
-
-            showInternetConnectionMessage()
-        }
-    }
-
-    fun onTvShowClicked(tvShowView: TvShowView) {
-
-        if (isConnectedToInternet()) {
-
-            view.navigateToTvShowDetail(tvShowView.id, tvShowView.name)
-        } else {
-            view.showConnectionDialog()
-        }
-    }
-
-    // ------------------------------------------------------------------------------------
-    // Private methods
-    // ------------------------------------------------------------------------------------
-
+    /**
+     * Show the principal tv show detail information
+     */
     private fun showPrincipalTvShowInformation() {
 
         // Poster
@@ -120,29 +156,12 @@ class ShowDetailPresenter(private val view: ShowDetailView, private val presenta
         }
     }
 
-    private fun showSimilarTvShows() {
 
-        if (tvShowDetailView.similarShows != null) {
-
-            if (tvShowDetailView.similarShows!!.shows.isNotEmpty()) {
-
-                totalSimilarTvShowsPages = tvShowDetailView.similarShows!!.totalPages
-                val similarTvShows = tvShowDetailView.similarShows!!.shows
-                val similarTvShowsViews = presentationDependencyInjector.getTvShowMapper().mapList(similarTvShows)
-                view.hideErrorMessage()
-                view.showSimilarTvShows(similarTvShowsViews)
-
-            } else {
-
-                view.showToastMessage(R.string.no_similar_tv_shows)
-            }
-
-        } else {
-
-            view.showToastMessage(R.string.no_similar_tv_shows)
-        }
-    }
-
+    /**
+     * Execute use case getSimilarTvShows
+     * Returns the list of similar tv shows by showId
+     * @param page current page used to know which page to load
+     */
     private fun executeGetSimilarTvShows(page: Int) {
 
         currentSimilarTvShowsPage = page + 1
@@ -166,9 +185,7 @@ class ShowDetailPresenter(private val view: ShowDetailView, private val presenta
 
                     if (response.shows.isNotEmpty()) {
 
-                        val similarTvShowsViews = presentationDependencyInjector.getTvShowMapper().mapList(response.shows)
-                        view.hideErrorMessage()
-                        view.showSimilarTvShows(similarTvShowsViews)
+                        prepareSimilarTvShowsViews(response.shows)
                     } else {
                         view.disableLoadMoreSimilarTvShows()
                     }
@@ -177,6 +194,19 @@ class ShowDetailPresenter(private val view: ShowDetailView, private val presenta
         }, GetSimilarTvShowsParams(tvShowDetailView.id, currentSimilarTvShowsPage))
     }
 
+    /**
+     * Prepare similar tv shows views to populate in the view
+     */
+    private fun prepareSimilarTvShowsViews(similarTvShows: List<TvShow>) {
+
+        val similarTvShowsViews = presentationDependencyInjector.getTvShowMapper().mapList(similarTvShows)
+        view.hideErrorMessage()
+        view.showSimilarTvShows(similarTvShowsViews)
+    }
+
+    /**
+     * Show Internet connection message when device not connected
+     */
     private fun showInternetConnectionMessage() {
 
         view.hideSimilarTvShows()
