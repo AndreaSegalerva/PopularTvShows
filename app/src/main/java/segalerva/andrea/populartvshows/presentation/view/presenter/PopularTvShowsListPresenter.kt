@@ -21,6 +21,12 @@ class PopularTvShowsListPresenter(private val view: PopularTvShowsListView, priv
     private var totalPages = 0
     private var currentPage = 0
 
+    /**
+     * Get popular tvShows data, only if device is connected to internet
+     * @param showNormalLoader used to know if the normal progress bar should be visible
+     * @param isRefreshing  used to know if the list is being refreshed and need to clean
+     * the actual adapter and it's items
+     */
     fun getPopularTvShowsData(showNormalLoader: Boolean, isRefreshing: Boolean) {
 
         if (isConnectedToInternet()) {
@@ -37,17 +43,45 @@ class PopularTvShowsListPresenter(private val view: PopularTvShowsListView, priv
         }
     }
 
+    /**
+     * When error message is shown and user tries again
+     * Refresh all the information
+     */
     fun onTryAgainClicked() {
 
         onRefresh()
     }
 
+    /**
+     * Refresh all the tv show list
+     */
     fun onRefresh() {
 
         currentPage = 0
         getPopularTvShowsData(true, true)
     }
 
+    /**
+     * When scrolled and need to paginate
+     * Load more tv shows only if there are missing pages to load
+     */
+    fun onLoadMore() {
+
+        //If there are more pages to load, continue loading tv shows
+        if (currentPage < totalPages) {
+
+            getPopularTvShowsData(false, false)
+
+        } else {
+
+            view.disableLoadMore()
+        }
+    }
+
+    /**
+     * When TvShow is clicked from the list
+     * Navigate to show detail only if device has connection
+     */
     fun onTvShowClicked(tvShowView: TvShowView) {
 
         if (isConnectedToInternet()) {
@@ -61,6 +95,10 @@ class PopularTvShowsListPresenter(private val view: PopularTvShowsListView, priv
     // Private methods
     // ------------------------------------------------------------------------------------
 
+    /**
+     * Execute the use case of getPopularTvShows
+     * Show the list of popular tvShows
+     */
     private fun executeGetPopularTvShows(page: Int, isRefreshing: Boolean) {
 
         currentPage = page + 1
@@ -71,7 +109,7 @@ class PopularTvShowsListPresenter(private val view: PopularTvShowsListView, priv
                 if (isSafeManipulateView()) {
 
                     view.hideLoading()
-                    enableLoaders()
+                    disableLoaders()
                     view.showErrorMessage(R.string.something_went_wrong)
                 }
             }
@@ -84,7 +122,7 @@ class PopularTvShowsListPresenter(private val view: PopularTvShowsListView, priv
                     enableLoaders()
                     totalPages = response.totalPages
 
-                    //If is pulling to refreshing we clear the adapter list
+                    //If is pulling to refreshing we clear the adapter list items
                     if (isRefreshing) {
                         view.cleanListTvShows()
                     }
@@ -95,21 +133,6 @@ class PopularTvShowsListPresenter(private val view: PopularTvShowsListView, priv
         }, currentPage)
     }
 
-    /**
-     * When scrolled and need to paginate
-     * Load more tv shows until all the pages are loaded
-     */
-    fun onLoadMore() {
-
-        if (currentPage < totalPages) {
-
-            getPopularTvShowsData(false, false)
-
-        } else {
-
-            view.disableLoadMore()
-        }
-    }
 
     /**
      * Show message when device not connected to internet
