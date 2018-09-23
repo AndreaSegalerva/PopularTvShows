@@ -49,6 +49,6 @@ class PresentationDependencyInjector(private val dataDependencyInjector: DataDep
      */
     fun getTVShowDetailMapper(): TvShowDetailMapper {
 
-        return TvShowDetailMapper(getTvShowMapper())
+        return TvShowDetailMapper()
     }
 }

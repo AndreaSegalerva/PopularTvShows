@@ -9,7 +9,7 @@ import segalerva.andrea.populartvshows.presentation.model.TvShowDetailView
  * @param tvShowMapper
  */
 
-class TvShowDetailMapper(private val tvShowMapper: TvShowMapper) {
+class TvShowDetailMapper {
 
     fun map(tvShowDetail: TvShowDetail): TvShowDetailView {
 

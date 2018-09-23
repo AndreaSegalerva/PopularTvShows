@@ -31,7 +31,7 @@ class TvShowMapper {
             }
         }
 
-        return tvShowViews;
+        return tvShowViews
     }
 }
 
