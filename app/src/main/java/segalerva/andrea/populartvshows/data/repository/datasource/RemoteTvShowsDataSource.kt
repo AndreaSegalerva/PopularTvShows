@@ -16,7 +16,7 @@ class RemoteTvShowsDataSource(private val restClient: RestClient) : TvShowsDataS
         return restClient.apiService!!.getPopularTvShows(page)
     }
 
-    override fun getTVShowById(showId: Int): Observable<TvShowEntity> {
+    override fun getTvShowById(showId: Int): Observable<TvShowEntity> {
 
         return restClient.apiService!!.getTvShowById(showId)
     }

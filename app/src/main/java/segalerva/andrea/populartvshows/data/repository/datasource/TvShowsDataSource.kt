@@ -10,6 +10,6 @@ import segalerva.andrea.populartvshows.data.model.response.PopularTvShowsRespons
 interface TvShowsDataSource {
 
     fun getPopularTvShows(page: Int): Observable<PopularTvShowsResponse>
-    fun getTVShowById(showId: Int):Observable<TvShowEntity>
+    fun getTvShowById(showId: Int):Observable<TvShowEntity>
     fun getSimilarTvShows(showId: Int,page: Int):Observable<PopularTvShowsResponse>
 }

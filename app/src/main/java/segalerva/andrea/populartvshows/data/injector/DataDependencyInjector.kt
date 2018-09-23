@@ -12,20 +12,6 @@ import segalerva.andrea.populartvshows.data.repository.datasource.RemoteTvShowsD
  */
 class DataDependencyInjector {
 
-    fun getRemoteTvShowsDataSource() = RemoteTvShowsDataSource(getRestClient())
-
-    /**
-     * Returns an instance of [TvShowEntityMapper] needed in [PopularTvShowsMapper]
-     */
-    fun getTvShowEntityMapper(): TvShowEntityMapper = TvShowEntityMapper()
-
-    /**
-     * Returns an instance of [PopularTvShowsMapper] needed in [TvShowsDataRepositoryImpl]
-     */
-    fun getPopularTvShowsMapper(): PopularTvShowsMapper {
-
-        return PopularTvShowsMapper(getTvShowEntityMapper())
-    }
 
     /**
      * Returns an instance of [TvShowsDataRepositoryImpl] needed in every use case defined in the domain layer
@@ -40,5 +26,23 @@ class DataDependencyInjector {
      */
     private fun getRestClient(): RestClient {
         return RestClient()
+    }
+
+    /**
+     * Returns an instance of [RemoteTvShowsDataSource]
+     */
+    private fun getRemoteTvShowsDataSource() = RemoteTvShowsDataSource(getRestClient())
+
+    /**
+     * Returns an instance of [TvShowEntityMapper] needed in [PopularTvShowsMapper]
+     */
+    private fun getTvShowEntityMapper(): TvShowEntityMapper = TvShowEntityMapper()
+
+    /**
+     * Returns an instance of [PopularTvShowsMapper] needed in [TvShowsDataRepositoryImpl]
+     */
+    private fun getPopularTvShowsMapper(): PopularTvShowsMapper {
+
+        return PopularTvShowsMapper(getTvShowEntityMapper())
     }
 }

@@ -22,7 +22,7 @@ class TvShowsDataRepositoryImpl(private val remoteTvShowsDataSource: TvShowsData
 
     override fun getShowById(showId: Int): Observable<TvShow> {
 
-        return remoteTvShowsDataSource.getTVShowById(showId).map {
+        return remoteTvShowsDataSource.getTvShowById(showId).map {
 
             this.tvShowEntityMapper.map(it)
         }
