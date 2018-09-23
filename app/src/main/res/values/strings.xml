@@ -1,5 +1,6 @@
 <resources>
     <string name="app_name">PopularTvShows</string>
+    <string name="popular_tv_shows"> Popular Tv Shows</string>
     <string name="votes">Votes</string>
     <string name="votes_count">Total Votes:</string>
     <string name="try_again">Try again</string>
