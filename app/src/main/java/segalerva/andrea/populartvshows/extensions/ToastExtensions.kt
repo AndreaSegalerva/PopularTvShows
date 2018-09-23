@@ -9,7 +9,15 @@ import segalerva.andrea.populartvshows.R
 
 /**
  * Created by andrea on 21/9/18.
- *
+ * Toast common extensions
+ */
+
+/**
+ * Create & show base toast being used as generic one in the application
+ * @param context
+ * @param message
+ * @param gravity
+ * @param duration
  */
 fun Toast.showToast(context: Context, message: String, gravity: Int, duration: Int) {
     val inflater: LayoutInflater = context.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater

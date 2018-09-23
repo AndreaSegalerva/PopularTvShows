@@ -15,7 +15,7 @@ import segalerva.andrea.populartvshows.R
 fun ImageView.loadImage(path: String?) {
 
     Picasso.get().load("http://image.tmdb.org/t/p/w342/" + path).
-            error(R.drawable.ic_poster_placeholder).
-            placeholder(R.drawable.ic_poster_placeholder).
+            error(R.color.polar).
+            placeholder(R.color.polar).
             into(this)
 }
