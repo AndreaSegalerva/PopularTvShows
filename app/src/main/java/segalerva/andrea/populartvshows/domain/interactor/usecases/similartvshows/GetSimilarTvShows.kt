@@ -16,6 +16,6 @@ class GetSimilarTvShows(private val dataDependencyInjector: DataDependencyInject
 
     override fun buildInteractorObservable(params: GetSimilarTvShowsParams): Observable<PopularTvShows> {
 
-        return dataDependencyInjector.getTvShowsDataRepository().getSimilarTvShows(params.showId, params.page)
+        return dataDependencyInjector.getTvShowsRepository().getSimilarTvShows(params.showId, params.page)
     }
 }

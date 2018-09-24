@@ -4,6 +4,7 @@ import segalerva.andrea.populartvshows.data.mapper.PopularTvShowsMapper
 import segalerva.andrea.populartvshows.data.mapper.TvShowEntityMapper
 import segalerva.andrea.populartvshows.data.network.RestClient
 import segalerva.andrea.populartvshows.data.repository.TvShowsDataRepositoryImpl
+import segalerva.andrea.populartvshows.data.repository.TvShowsRepository
 import segalerva.andrea.populartvshows.data.repository.datasource.RemoteTvShowsDataSource
 
 /**
@@ -14,9 +15,10 @@ class DataDependencyInjector {
 
 
     /**
-     * Returns an instance of [TvShowsDataRepositoryImpl] needed in every use case defined in the domain layer
+     * Returns an instance of [TvShowsRepository] needed in every use case defined in the domain layer
      */
-    fun getTvShowsDataRepository(): TvShowsDataRepositoryImpl {
+    fun getTvShowsRepository(): TvShowsRepository {
+
 
         return TvShowsDataRepositoryImpl(getRemoteTvShowsDataSource(), getPopularTvShowsMapper(), getTvShowEntityMapper())
     }

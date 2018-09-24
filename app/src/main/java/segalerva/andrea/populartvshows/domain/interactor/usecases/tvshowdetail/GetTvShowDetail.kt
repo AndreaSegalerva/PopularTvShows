@@ -28,7 +28,7 @@ class GetTvShowDetail(private val dataDependencyInjector: DataDependencyInjector
      */
     private fun getTvShowById(showId: Int): Observable<TvShowDetail> {
 
-        return dataDependencyInjector.getTvShowsDataRepository().getShowById(showId).map {
+        return dataDependencyInjector.getTvShowsRepository().getShowById(showId).map {
 
             this.domainDependencyInjector.getTvShowDetailMapper().map(it)
         }

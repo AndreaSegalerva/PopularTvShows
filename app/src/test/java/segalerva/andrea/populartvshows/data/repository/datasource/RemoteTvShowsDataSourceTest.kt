@@ -24,7 +24,7 @@ class RemoteTvShowsDataSourceTest {
 
     private val restClient: RestClient = mock()
     val apiService: ApiService = mock()
-    private lateinit var remoteTvShowsDataSource: RemoteTvShowsDataSource
+    private lateinit var remoteTvShowsDataSource: TvShowsDataSource
 
     @Before
     fun setUp() {

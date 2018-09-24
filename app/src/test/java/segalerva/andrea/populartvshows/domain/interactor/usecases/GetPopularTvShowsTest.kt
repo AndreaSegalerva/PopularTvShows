@@ -9,7 +9,7 @@ import org.junit.runner.RunWith
 import org.mockito.Mockito
 import org.mockito.junit.MockitoJUnitRunner
 import segalerva.andrea.populartvshows.data.injector.DataDependencyInjector
-import segalerva.andrea.populartvshows.data.repository.TvShowsDataRepositoryImpl
+import segalerva.andrea.populartvshows.data.repository.TvShowsRepository
 import segalerva.andrea.populartvshows.domain.interactor.usecases.populartvshows.GetPopularTvShows
 
 /**
@@ -22,13 +22,13 @@ class GetPopularTvShowsTest {
 
     private lateinit var getPopularTvShows: GetPopularTvShows
     private val dataDependencyInjector: DataDependencyInjector = mock()
-    private val tvShowsDataRepository: TvShowsDataRepositoryImpl = mock()
+    private val tvShowsRepository: TvShowsRepository = mock()
 
     @Before
     fun setUp() {
 
         getPopularTvShows = GetPopularTvShows(dataDependencyInjector)
-        Mockito.`when`(dataDependencyInjector.getTvShowsDataRepository()).thenReturn(tvShowsDataRepository)
+        Mockito.`when`(dataDependencyInjector.getTvShowsRepository()).thenReturn(tvShowsRepository)
     }
 
     @Test
@@ -36,6 +36,6 @@ class GetPopularTvShowsTest {
 
         getPopularTvShows.buildInteractorObservable(1)
 
-        verify(tvShowsDataRepository, times(1)).getPopularTVShows(1)
+        verify(tvShowsRepository, times(1)).getPopularTVShows(1)
     }
 }

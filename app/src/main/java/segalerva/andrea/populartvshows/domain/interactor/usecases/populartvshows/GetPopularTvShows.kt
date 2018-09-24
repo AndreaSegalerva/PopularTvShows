@@ -16,6 +16,6 @@ class GetPopularTvShows(private val dataDependencyInjector: DataDependencyInject
 
     override fun buildInteractorObservable(params: Int): Observable<PopularTvShows> {
 
-        return dataDependencyInjector.getTvShowsDataRepository().getPopularTVShows(params)
+        return dataDependencyInjector.getTvShowsRepository().getPopularTVShows(params)
     }
 }
