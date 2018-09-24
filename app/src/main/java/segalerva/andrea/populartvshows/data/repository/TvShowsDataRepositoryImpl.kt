@@ -10,11 +10,11 @@ import segalerva.andrea.populartvshows.domain.model.TvShow
 /**
  * Created by andrea on 15/9/18.
  */
-class TvShowsDataRepositoryImpl(private val remoteTvShowsDataSource: TvShowsDataSource, private val popularTvShowsMapper: PopularTvShowsMapper, private val tvShowEntityMapper: TvShowEntityMapper) : TvShowsRepository {
+class TvShowsDataRepositoryImpl(private val tvShowsDataSource: TvShowsDataSource, private val popularTvShowsMapper: PopularTvShowsMapper, private val tvShowEntityMapper: TvShowEntityMapper) : TvShowsRepository {
 
     override fun getPopularTVShows(page: Int): Observable<PopularTvShows> {
 
-        return remoteTvShowsDataSource.getPopularTvShows(page).map {
+        return tvShowsDataSource.getPopularTvShows(page).map {
 
             this.popularTvShowsMapper.map(it)
         }
@@ -22,7 +22,7 @@ class TvShowsDataRepositoryImpl(private val remoteTvShowsDataSource: TvShowsData
 
     override fun getShowById(showId: Int): Observable<TvShow> {
 
-        return remoteTvShowsDataSource.getTvShowById(showId).map {
+        return tvShowsDataSource.getTvShowById(showId).map {
 
             this.tvShowEntityMapper.map(it)
         }
@@ -30,7 +30,7 @@ class TvShowsDataRepositoryImpl(private val remoteTvShowsDataSource: TvShowsData
 
     override fun getSimilarTvShows(showId: Int, page: Int): Observable<PopularTvShows> {
 
-        return remoteTvShowsDataSource.getSimilarTvShows(showId, page).map {
+        return tvShowsDataSource.getSimilarTvShows(showId, page).map {
 
             this.popularTvShowsMapper.map(it)
         }
