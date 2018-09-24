@@ -40,4 +40,9 @@ ext {
     JUnitVersion = '4.12'
     testRunnerVersion = '1.0.2'
     espressoVersion='3.0.2'
+    retrofitVersion = '2.4.0'
+    rxJavaVersion = '2.1.12'
+    rxAndroidVersion = '2.0.2'
+    mockitoVersion = '1.5.0'
+
 }

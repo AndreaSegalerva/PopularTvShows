@@ -1,3 +1,20 @@
 <resources>
     <string name="app_name">PopularTvShows</string>
+    <string name="popular_tv_shows"> Popular Tv Shows</string>
+    <string name="votes">Votes</string>
+    <string name="votes_count">Total Votes:</string>
+    <string name="try_again">Try again</string>
+    <string name="dialog_no_connection_title">No internet connection</string>
+    <string name="dialog_need_internet_connection_message">Make sure that your device is connected to the internet going to the settings device.</string>
+    <string name="no_connection_try_again">Once your device is connected to the internet.</string>
+    <string name="need_connection_to_continue">Your device needs to be connected to continue using the app.</string>
+    <string name="dialog_no_connection_ok_button">OK</string>
+    <string name="something_went_wrong">Something went wrong. Please try again later</string>
+    <string name="tv_show_overview">OverView</string>
+    <string name="tv_show_air_date">Air date:</string>
+    <string name="tv_show_episodes_title">Seasons and Episodes</string>
+    <string name="tv_show_seasons">%d Seasons</string>
+    <string name="tv_show_episodes">%d Episodes</string>
+    <string name="tv_show_similar">Similar Tv shows:</string>
+    <string name="no_similar_tv_shows">This Tv show has no similar ones</string>
 </resources>
