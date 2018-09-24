@@ -61,29 +61,38 @@ abstract class BaseFragment : Fragment(), BaseView {
         return isAdded && getBaseActivity() != null && !getBaseActivity()!!.isFinishing
     }
 
+    /**
+     * Method to know if the device is connected to internet
+     */
     override fun isConnectedToInternet(): Boolean {
 
         val connectivityManager = context()!!.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
 
         val activeNetwork = connectivityManager.activeNetworkInfo
 
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+        if (activeNetwork != null) {
 
-            return activeNetwork != null && activeNetwork.isConnectedOrConnecting
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
 
-        } else {
+                return activeNetwork.isConnectedOrConnecting
 
-            return when (activeNetwork.type) {
-                ConnectivityManager.TYPE_WIFI -> {
-                    true
-                }
-                ConnectivityManager.TYPE_MOBILE -> {
-                    true
-                }
-                else -> {
-                    false
+            } else {
+
+                return when (activeNetwork.type) {
+                    ConnectivityManager.TYPE_WIFI -> {
+                        true
+                    }
+                    ConnectivityManager.TYPE_MOBILE -> {
+                        true
+                    }
+                    else -> {
+                        false
+                    }
                 }
             }
+
+        } else {
+            return false
         }
     }
 
